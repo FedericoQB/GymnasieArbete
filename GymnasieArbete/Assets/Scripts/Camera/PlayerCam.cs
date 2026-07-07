@@ -25,7 +25,6 @@ public class PlayerCam : MonoBehaviour
     {
         LookAround();
 
-        /* Add back when added interaction
         if (Input.GetKeyDown(interactKey))
         {
             if (Physics.Raycast(transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, LayerMask.GetMask("InteractableLayer")))
@@ -35,7 +34,6 @@ public class PlayerCam : MonoBehaviour
             }
             Debug.DrawRay(transform.position, Camera.main.transform.forward, Color.red, 2f);
         }
-        */
     }
 
     void LookAround()

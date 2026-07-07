@@ -63,6 +63,8 @@ public class InventorySystem : MonoBehaviour
         }
     }
 
+    // Currently the testing phase uses UI to execute the events, will not work in current state as the hands are geometry
+
     public void EquipItemLeft(bool IsEquipped) // Figure out a way to know if an Item is equipped or not
     {
         if (IsEquipped) UnEquipHand(rightHand);

@@ -1,8 +1,12 @@
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class Tools : MonoBehaviour
 {
-    private bool isEquipped;
+    // Variables
+
+    //
+
+    protected bool isEquipped;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

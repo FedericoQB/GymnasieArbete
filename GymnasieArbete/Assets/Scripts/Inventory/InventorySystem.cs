@@ -11,7 +11,7 @@ public class InventorySystem : MonoBehaviour
     [SerializeField] private GameObject rightHand;
 
     [Header("Items")]
-    [SerializeField] private List<Item> items = new List<Item>();
+    [SerializeField] private List<Tools> items = new List<Tools>();
 
     [Header("Keybinds")]
     public KeyCode inventoryKey = KeyCode.Tab;
@@ -65,28 +65,31 @@ public class InventorySystem : MonoBehaviour
 
     // Currently the testing phase uses UI to execute the events, will not work in current state as the hands are geometry
 
-    public void EquipItemLeft(bool IsEquipped) // Figure out a way to know if an Item is equipped or not
+    public void EquipItemLeft(int itemIndex) // Figure out a way to know if an Item is equipped or not
     {
-        if (IsEquipped) UnEquipHand(rightHand);
+        if (items[itemIndex].GetEquippedState() == true) UnEquipHand(rightHand);
 
         UnEquipHand(leftHand);
 
         Debug.Log("Equipped Item in Left Hand");
-        leftHand.GetComponent<Image>().color = Color.red;
+        items[0].enabled = true;
     }
 
-    public void EquipItemRight(bool IsEquipped)
+    public void EquipItemRight(int itemIndex)
     {
-        if (IsEquipped) UnEquipHand(leftHand);
+        if (items[itemIndex].GetEquippedState() == true) UnEquipHand(rightHand);
 
         UnEquipHand(rightHand);
 
         Debug.Log("Equipped Item in Right Hand");
-        rightHand.GetComponent<Image>().color = Color.blue;
+        items[0].enabled = true;
     }
 
     public void UnEquipHand(GameObject hand)
     {
-        hand.GetComponent<Image>().color = Color.white; // Add actual function later
+        // Unequip items
+
+        // Temp test with flashlight
+        items[0].enabled = false;
     }
 }

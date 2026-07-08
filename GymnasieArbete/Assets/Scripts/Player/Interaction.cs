@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(SphereCollider))]
 public class Interaction : MonoBehaviour
 {
-    public bool isInRange;
+    private bool isInRange = false;
     public UnityEvent interactAction; // Is a variable which can be assigned to access a specific function in a script
 
     void Start()
@@ -22,19 +22,8 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider collision)
+    public void InRange()
     {
-        if (collision.tag == "Player")
-        {
-            isInRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.tag == "Player")
-        {
-            isInRange = false;
-        }
+        isInRange = !isInRange;
     }
 }

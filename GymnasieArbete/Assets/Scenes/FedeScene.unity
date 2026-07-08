@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 779435754}
   - component: {fileID: 779435757}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: InteractTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -318,13 +318,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779435752}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.545, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8.15779, y: 1.2950001, z: -6.87025}
   m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1311736248}
-  m_Father: {fileID: 2140901405}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &779435754
 BoxCollider:
@@ -604,6 +604,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7567007855182983081, guid: 17dbcd854b5461241b7a431bf6a63fec, type: 3}
   m_PrefabInstance: {fileID: 664205876531015700}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1078000991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7020901977096908143, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+  m_PrefabInstance: {fileID: 5318529246243085567}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa5df4614f8c1c84e940327841034079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interaction
 --- !u!4 &1311736248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6837373881270909910, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
@@ -767,7 +778,7 @@ GameObject:
   - component: {fileID: 2140901402}
   - component: {fileID: 2140901406}
   m_Layer: 0
-  m_Name: InteractTest
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -862,8 +873,7 @@ Transform:
   m_LocalPosition: {x: -8.15779, y: 0.75, z: -6.87025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 779435753}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2140901406
@@ -1191,6 +1201,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 779435753}
     m_Modifications:
+    - target: {fileID: 1100904914931724153, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100904914931724153, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1100904914931724153, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3060461307301555231, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1222,6 +1244,42 @@ PrefabInstance:
     - target: {fileID: 3475851173333644993, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
       propertyPath: m_Name
       value: Interactable
+      objectReference: {fileID: 0}
+    - target: {fileID: 3475851173333644993, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1078000991}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InRange
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Interaction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975353059174380623, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: detectionAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4036897384547261717, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6837373881270909910, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1263,6 +1321,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6953470458176634204, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7020901977096908143, guid: 03ca04eadf806d14d9050fab0b2de501, type: 3}
+      propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 779435757}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1278,3 +1344,4 @@ SceneRoots:
   - {fileID: 1331106295662147239}
   - {fileID: 834345240}
   - {fileID: 2140901405}
+  - {fileID: 779435753}

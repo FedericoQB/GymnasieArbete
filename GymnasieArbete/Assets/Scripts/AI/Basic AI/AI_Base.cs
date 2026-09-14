@@ -3,11 +3,9 @@ using UnityEngine;
 [RequireComponent (typeof(AI_References))]
 public class AI_Base : MonoBehaviour
 {
-    public Transform target;
+    protected AI_References ai_References;
 
-    private AI_References ai_References;
-
-    private float pathUpdateDeadline;
+    protected float pathUpdateDeadline;
 
     private void Awake()
     {
@@ -21,7 +19,7 @@ public class AI_Base : MonoBehaviour
     }
 
     // Sets destination for the AI with a small delay for optimization
-    public void UpdatePath(Vector3 pos)
+    public virtual void UpdatePath(Vector3 pos)
     {
         if (Time.time >= pathUpdateDeadline)
         {

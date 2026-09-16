@@ -1,12 +1,17 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AI_Basic_1 : AI_Base
 {
     public Transform target;
+    public Transform playerTarget;
+
     // Ingame logic variables
     float idleTime;
     public float idleStartTime;
+    LayerMask layerMask;
+    
 
     bool isOnTarget;
 
@@ -32,6 +37,8 @@ public class AI_Basic_1 : AI_Base
     // Update is called once per frame
     void Update()
     {
+        Perception();
+
         switch (currentState)
         {
             case AIState.Idle:
@@ -79,6 +86,21 @@ public class AI_Basic_1 : AI_Base
             return;
         }
         // Patrol();
+    }
+
+    void Perception()
+    {
+        Vector3 direction = (playerTarget.position - transform.position);
+
+        layerMask = LayerMask.GetMask("Wall", "Player");
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity, layerMask))
+        {
+            if (hit.collider.CompareTag("Player")) Debug.Log("Sees Player");
+            else Debug.Log("Does not see Player");
+        }
+        Debug.DrawRay(transform.position, direction, Color.orangeRed);
     }
 
     // Sets destination with optimized delay

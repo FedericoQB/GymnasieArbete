@@ -1,16 +1,25 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class AI_Basic_1 : AI_Base
 {
+    [Header("References")]
     public Transform target;
     public Transform playerTarget;
+    public GameObject eyesObject;
 
     // Ingame logic variables
     float idleTime;
     public float idleStartTime;
     LayerMask layerMask;
+
+    // Perception
+    [Header("Perception Values")]
+    [SerializeField] private float maxAngle = 45f;
+    [SerializeField] private int rayCount = 9;
+    [SerializeField] private float rayLength = 10f;
     
 
     bool isOnTarget;
@@ -32,6 +41,8 @@ public class AI_Basic_1 : AI_Base
     void Start()
     {
         idleTime = idleStartTime;
+
+        ai_References.navMeshAgent.updateRotation = true;
     }
 
     // Update is called once per frame
@@ -60,6 +71,7 @@ public class AI_Basic_1 : AI_Base
         Debug.Log($"AI state transitioned to state: {newState}");
     }
 
+    // Idle state - Waits for a specified time period
     void Idle()
     {
         if (idleTime > 0)
@@ -78,9 +90,10 @@ public class AI_Basic_1 : AI_Base
         UpdatePath(target.position);
     }
 
+    // State to check if AI is on target
     void Walking()
     {
-        if (isOnTarget)
+        if (isOnTarget) // If on target, return to idle state
         {
             TransitionToState(AIState.Idle);
             return;
@@ -88,19 +101,28 @@ public class AI_Basic_1 : AI_Base
         // Patrol();
     }
 
+    // Checks for player
     void Perception()
     {
-        Vector3 direction = (playerTarget.position - transform.position);
+        Vector3 origin = eyesObject.transform.position;
+
+        //Vector3 direction = (playerTarget.position - origin);
 
         layerMask = LayerMask.GetMask("Wall", "Player");
 
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity, layerMask))
+        for (int i = 0; i < rayCount; i++)
         {
-            if (hit.collider.CompareTag("Player")) Debug.Log("Sees Player");
-            else Debug.Log("Does not see Player");
+            float currentAngle = Mathf.Lerp(-maxAngle, maxAngle, (float)i / (rayCount - 1));
+
+            Vector3 rayDirection = Quaternion.AngleAxis(currentAngle, Vector3.up) * transform.forward;
+
+            RaycastHit hit;
+            if (Physics.Raycast(origin, rayDirection, out hit, Mathf.Infinity, layerMask)) // Sends out a Raycast for the player
+            {
+                if (hit.collider.CompareTag("Player")) Debug.Log("Sees Player");
+            }
+            Debug.DrawRay(origin, rayDirection * rayLength, Color.orangeRed);
         }
-        Debug.DrawRay(transform.position, direction, Color.orangeRed);
     }
 
     // Sets destination with optimized delay

@@ -15,6 +15,8 @@ public class AI_Basic_1 : AI_Base
     public float idleStartTime;
     LayerMask layerMask;
 
+    bool seesPlayer;
+
     // Perception
     [Header("Perception Values")]
     [SerializeField] private float maxAngle = 45f;
@@ -29,8 +31,8 @@ public class AI_Basic_1 : AI_Base
     {
         Idle,
         Patrol,
-        Walking
-        //Chase,
+        Walking,
+        Chase
         //Attack,
 
     }
@@ -61,6 +63,9 @@ public class AI_Basic_1 : AI_Base
             case AIState.Walking:
                 Walking();
                 break;
+            case AIState.Chase:
+                Chase();
+                break;
         }
     }
 
@@ -90,7 +95,7 @@ public class AI_Basic_1 : AI_Base
         UpdatePath(target.position);
     }
 
-    // State to check if AI is on target
+    // State to make sure it goes to its target without changing course
     void Walking()
     {
         if (isOnTarget) // If on target, return to idle state
@@ -101,25 +106,35 @@ public class AI_Basic_1 : AI_Base
         // Patrol();
     }
 
+    void Chase() // Fix chasing and walking
+    {
+        UpdatePath(playerTarget.position);
+    }
+
     // Checks for player
     void Perception()
     {
         Vector3 origin = eyesObject.transform.position;
 
-        //Vector3 direction = (playerTarget.position - origin);
-
         layerMask = LayerMask.GetMask("Wall", "Player");
 
         for (int i = 0; i < rayCount; i++)
         {
-            float currentAngle = Mathf.Lerp(-maxAngle, maxAngle, (float)i / (rayCount - 1));
+            float currentAngle = Mathf.Lerp(-maxAngle, maxAngle, (float)i / (rayCount - 1)); // Calculates angle for current raycast
 
-            Vector3 rayDirection = Quaternion.AngleAxis(currentAngle, Vector3.up) * transform.forward;
+            Vector3 rayDirection = Quaternion.AngleAxis(currentAngle, Vector3.up) * transform.forward; // Sets angle for the current raycast
 
             RaycastHit hit;
             if (Physics.Raycast(origin, rayDirection, out hit, Mathf.Infinity, layerMask)) // Sends out a Raycast for the player
             {
-                if (hit.collider.CompareTag("Player")) Debug.Log("Sees Player");
+                if (hit.collider.CompareTag("Player"))
+                {
+                    seesPlayer = true;
+                    Debug.Log("Sees Player");
+                    playerTarget = hit.collider.transform;
+                    TransitionToState(AIState.Chase);
+                }
+                
             }
             Debug.DrawRay(origin, rayDirection * rayLength, Color.orangeRed);
         }
@@ -138,7 +153,7 @@ public class AI_Basic_1 : AI_Base
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TargetTest"))
+        if (other.CompareTag("TargetTest") || other.CompareTag("Player"))
         {
             isOnTarget = true;
         }
@@ -146,7 +161,7 @@ public class AI_Basic_1 : AI_Base
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("TargetTest"))
+        if (other.CompareTag("TargetTest") || other.CompareTag("Player"))
         {
             isOnTarget = false;
         }

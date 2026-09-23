@@ -2073,6 +2073,7 @@ GameObject:
   - component: {fileID: 387877106}
   - component: {fileID: 387877105}
   - component: {fileID: 387877104}
+  - component: {fileID: 387877107}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2154,6 +2155,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &387877107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387877103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!43 &396413948
 Mesh:
   m_ObjectHideFlags: 0
@@ -5464,6 +5509,56 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &881546283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5017030432313108764, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+  m_PrefabInstance: {fileID: 929955869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &881546288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881546283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras:
+  - {fileID: 1381860464}
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &899657646
 GameObject:
   m_ObjectHideFlags: 0
@@ -5552,10 +5647,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 2173654715992742042, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2481358413110779851, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 3894121464334424783, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 3932245711115451658, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
       propertyPath: orientation
       value: 
@@ -5632,6 +5735,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 5194173840713002008, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 7797977474504476710, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
       propertyPath: m_CastShadows
       value: 0
@@ -5652,13 +5759,28 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 34fc287f7010aca4b810c95292e360bf, type: 2}
+    - target: {fileID: 8812356063854973306, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      propertyPath: field of view
+      value: 65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812356063854973306, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 511
+      objectReference: {fileID: 0}
+    - target: {fileID: 8812356063854973306, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4036049350050088948, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 198334071}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5017030432313108764, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 881546288}
   m_SourcePrefab: {fileID: 100100000, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
 --- !u!1 &950905272
 GameObject:
@@ -9290,6 +9412,11 @@ PrefabInstance:
       addedObject: {fileID: 765005265}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+--- !u!20 &1381860464 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 247194393302659320, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
+  m_PrefabInstance: {fileID: 929955869}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &1384033610
 Mesh:
   m_ObjectHideFlags: 0
@@ -11160,7 +11287,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
+  m_Speed: 2
   m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 140
@@ -12096,7 +12223,7 @@ MonoBehaviour:
   - {fileID: 1935739795}
   - {fileID: 1159223248}
   switchDelay: 5
-  rotationEnabled: 0
+  rotationEnabled: 1
 --- !u!135 &1799864344
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -7,15 +7,18 @@ public class AI_Basic_1 : AI_Base
 {
     [Header("References")]
     public Transform target;
-    public Transform playerTarget;
+    private Transform playerTarget;
     public GameObject eyesObject;
+    
 
     // Ingame logic variables
     float idleTime;
     public float idleStartTime;
+    float lookingTime;
+    public float lookingStartTime;
     LayerMask layerMask;
-
-    bool seesPlayer;
+    private Vector3 lastSeenPosition;
+    private bool playerVisible;
 
     // Perception
     [Header("Perception Values")]
@@ -32,7 +35,8 @@ public class AI_Basic_1 : AI_Base
         Idle,
         Patrol,
         Walking,
-        Chase
+        Chase,
+        Looking
         //Attack,
 
     }
@@ -43,6 +47,7 @@ public class AI_Basic_1 : AI_Base
     void Start()
     {
         idleTime = idleStartTime;
+        lookingTime = lookingStartTime;
 
         ai_References.navMeshAgent.updateRotation = true;
     }
@@ -65,6 +70,9 @@ public class AI_Basic_1 : AI_Base
                 break;
             case AIState.Chase:
                 Chase();
+                break;
+            case AIState.Looking:
+                Looking();
                 break;
         }
     }
@@ -93,22 +101,47 @@ public class AI_Basic_1 : AI_Base
     void Patrol()
     {
         UpdatePath(target.position);
+        TransitionToState(AIState.Walking);
     }
 
     // State to make sure it goes to its target without changing course
-    void Walking()
+    void Walking() // Gets stuck on walking if target moves away
     {
         if (isOnTarget) // If on target, return to idle state
         {
             TransitionToState(AIState.Idle);
             return;
         }
-        // Patrol();
+        
     }
 
     void Chase() // Fix chasing and walking
     {
-        UpdatePath(playerTarget.position);
+        if (playerVisible)
+        {
+            // If Player is visible continue chasing and mark last seen position
+            UpdatePath(playerTarget.position);
+            lastSeenPosition = playerTarget.position;
+        }
+        else // If Player is no longer visible, switch state to looking
+        {
+            TransitionToState(AIState.Looking);
+        }
+    }
+
+    void Looking()
+    {
+        if (lookingTime > 0) // Certain amount of time to go to last seen position and find player
+        {
+            lookingTime -= Time.deltaTime;
+            UpdatePath(lastSeenPosition); // Player checks are done through Perception function
+            return;
+        }
+
+        lookingTime = lookingStartTime;
+
+        // Switches to Patrol if player is not found during looking time
+        TransitionToState(AIState.Patrol);
     }
 
     // Checks for player
@@ -127,13 +160,14 @@ public class AI_Basic_1 : AI_Base
             RaycastHit hit;
             if (Physics.Raycast(origin, rayDirection, out hit, Mathf.Infinity, layerMask)) // Sends out a Raycast for the player
             {
-                if (hit.collider.CompareTag("Player"))
+                if (hit.collider.CompareTag("Player")) // Checks if its the Player
                 {
-                    seesPlayer = true;
                     Debug.Log("Sees Player");
-                    playerTarget = hit.collider.transform;
+                    playerVisible = true;
+                    playerTarget = hit.collider.transform; // Sets playerTarget to the hit transform
                     TransitionToState(AIState.Chase);
                 }
+                // Check how to check each ray if they saw player or not.
                 
             }
             Debug.DrawRay(origin, rayDirection * rayLength, Color.orangeRed);
@@ -147,7 +181,7 @@ public class AI_Basic_1 : AI_Base
         {
             base.pathUpdateDeadline = Time.time + ai_References.pathUpdateDelay;
             ai_References.navMeshAgent.SetDestination(pos);
-            TransitionToState(AIState.Walking);
+            //TransitionToState(AIState.Walking);
         }
     }
 

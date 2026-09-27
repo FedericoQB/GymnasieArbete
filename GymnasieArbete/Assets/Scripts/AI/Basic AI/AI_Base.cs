@@ -27,4 +27,9 @@ public class AI_Base : MonoBehaviour
             ai_References.navMeshAgent.SetDestination(pos);
         }
     }
+
+    public Vector3 CheckDestination()
+    {
+        return ai_References.navMeshAgent.destination;
+    }
 }

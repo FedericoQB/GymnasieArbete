@@ -11144,11 +11144,13 @@ MonoBehaviour:
   target: {fileID: 1799864342}
   eyesObject: {fileID: 509141477}
   idleStartTime: 4
-  lookingStartTime: 0
+  lookingStartTime: 5
+  rangeOfAttack: 1
   maxAngle: 30
   rayCount: 20
   rayLength: 10
   currentState: 1
+  previousState: 0
 --- !u!114 &1677623555
 MonoBehaviour:
   m_ObjectHideFlags: 0

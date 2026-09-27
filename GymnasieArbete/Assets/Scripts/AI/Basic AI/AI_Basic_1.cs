@@ -20,6 +20,8 @@ public class AI_Basic_1 : AI_Base
     private Vector3 lastSeenPosition;
     private bool playerVisible;
 
+    public float rangeOfAttack = 0.5f;
+
     // Perception
     [Header("Perception Values")]
     [SerializeField] private float maxAngle = 45f;
@@ -37,11 +39,10 @@ public class AI_Basic_1 : AI_Base
         Walking,
         Chase,
         Looking
-        //Attack,
-
     }
 
     [SerializeField] private AIState currentState = AIState.Patrol;
+    [SerializeField] private AIState previousState;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,6 +57,7 @@ public class AI_Basic_1 : AI_Base
     void Update()
     {
         Perception();
+
 
         switch (currentState)
         {
@@ -80,6 +82,8 @@ public class AI_Basic_1 : AI_Base
     // Switches the current state to a new chosen state
     void TransitionToState(AIState newState)
     {
+        // Only sets when transitioning
+        previousState = currentState;
         currentState = newState;
         Debug.Log($"AI state transitioned to state: {newState}");
     }
@@ -101,27 +105,53 @@ public class AI_Basic_1 : AI_Base
     void Patrol()
     {
         UpdatePath(target.position);
+
+        if (CheckDestination() != target.position) return; // Makes sure that patrol works as intended
+
         TransitionToState(AIState.Walking);
     }
 
     // State to make sure it goes to its target without changing course
-    void Walking() // Gets stuck on walking if target moves away
+    void Walking()
     {
         if (isOnTarget) // If on target, return to idle state
         {
             TransitionToState(AIState.Idle);
             return;
         }
-        
+        else if (previousState != AIState.Patrol) // Fixes the rapid switching
+        {
+            TransitionToState(AIState.Patrol);
+            return;
+        }
+
+        if (CheckDestination() == lastSeenPosition && previousState != AIState.Looking)
+        {
+            TransitionToState(AIState.Patrol);
+        }
     }
 
-    void Chase() // Fix chasing and walking
+    void Chase()
     {
         if (playerVisible)
         {
             // If Player is visible continue chasing and mark last seen position
             UpdatePath(playerTarget.position);
             lastSeenPosition = playerTarget.position;
+
+            Vector3 origin = eyesObject.transform.position;
+
+            Vector3 rayDirection = playerTarget.position - eyesObject.transform.position;
+
+            RaycastHit hit;
+            if (Physics.Raycast(origin, rayDirection, out hit, rangeOfAttack, layerMask)) // Sends out a Raycast for the player
+            {
+                if (hit.collider.CompareTag("Player")) // Checks if its the Player
+                {
+                    Attack();
+                }
+            }
+            Debug.DrawRay(origin, rayDirection * rangeOfAttack, Color.aliceBlue);
         }
         else // If Player is no longer visible, switch state to looking
         {
@@ -138,10 +168,16 @@ public class AI_Basic_1 : AI_Base
             return;
         }
 
-        lookingTime = lookingStartTime;
-
         // Switches to Patrol if player is not found during looking time
         TransitionToState(AIState.Patrol);
+
+        // Resets timer
+        lookingTime = lookingStartTime;
+    }
+
+    void Attack() // Implement Code for death of Player
+    {
+        Debug.Log("Player DEAD");
     }
 
     // Checks for player
@@ -151,6 +187,14 @@ public class AI_Basic_1 : AI_Base
 
         layerMask = LayerMask.GetMask("Wall", "Player");
 
+        // Temporary boolean for checking rays
+        bool raySeesPlayer = false;
+
+        /*
+         * Possible addition to the reactive AI, increasing the Angle when chasing and looking and narrowing it down when patrolling.
+         * For a wider "understanding" of its environment
+         */
+
         for (int i = 0; i < rayCount; i++)
         {
             float currentAngle = Mathf.Lerp(-maxAngle, maxAngle, (float)i / (rayCount - 1)); // Calculates angle for current raycast
@@ -158,20 +202,21 @@ public class AI_Basic_1 : AI_Base
             Vector3 rayDirection = Quaternion.AngleAxis(currentAngle, Vector3.up) * transform.forward; // Sets angle for the current raycast
 
             RaycastHit hit;
-            if (Physics.Raycast(origin, rayDirection, out hit, Mathf.Infinity, layerMask)) // Sends out a Raycast for the player
+            if (Physics.Raycast(origin, rayDirection, out hit, rayLength, layerMask)) // Sends out a Raycast for the player
             {
                 if (hit.collider.CompareTag("Player")) // Checks if its the Player
                 {
-                    Debug.Log("Sees Player");
-                    playerVisible = true;
+                    raySeesPlayer = true;
                     playerTarget = hit.collider.transform; // Sets playerTarget to the hit transform
-                    TransitionToState(AIState.Chase);
                 }
-                // Check how to check each ray if they saw player or not.
-                
             }
             Debug.DrawRay(origin, rayDirection * rayLength, Color.orangeRed);
         }
+
+        // Sets global value to local value
+        playerVisible = raySeesPlayer;
+        // If player is visible and is not currently chasing, start Chase.
+        if (playerVisible && currentState != AIState.Chase) TransitionToState(AIState.Chase);
     }
 
     // Sets destination with optimized delay
@@ -181,7 +226,6 @@ public class AI_Basic_1 : AI_Base
         {
             base.pathUpdateDeadline = Time.time + ai_References.pathUpdateDelay;
             ai_References.navMeshAgent.SetDestination(pos);
-            //TransitionToState(AIState.Walking);
         }
     }
 

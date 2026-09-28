@@ -32,4 +32,18 @@ public class AI_Base : MonoBehaviour
     {
         return ai_References.navMeshAgent.destination;
     }
+
+    // Fully taken from Unity Documentation FIX PLEASE IT DOES NOT WORK AT ALL
+    protected bool pathComplete()
+    {
+        if (Vector3.Distance(ai_References.navMeshAgent.destination, ai_References.navMeshAgent.transform.position) <= ai_References.navMeshAgent.stoppingDistance)
+        {
+            if (!ai_References.navMeshAgent.hasPath || ai_References.navMeshAgent.velocity.sqrMagnitude == 0f)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

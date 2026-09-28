@@ -21,6 +21,9 @@ public class AI_Basic_1 : AI_Base
     private bool playerVisible;
 
     public float rangeOfAttack = 0.5f;
+    public float damage = 1f;
+    public float attackDelay = 2f;
+    Coroutine attackCoroutine;
 
     // Perception
     [Header("Perception Values")]
@@ -28,6 +31,7 @@ public class AI_Basic_1 : AI_Base
     [SerializeField] private int rayCount = 9;
     [SerializeField] private float rayLength = 10f;
     
+
 
     bool isOnTarget;
 
@@ -148,7 +152,8 @@ public class AI_Basic_1 : AI_Base
             {
                 if (hit.collider.CompareTag("Player")) // Checks if its the Player
                 {
-                    Attack();
+                    if (attackCoroutine != null) return;
+                    attackCoroutine = StartCoroutine(Attack());
                 }
             }
             Debug.DrawRay(origin, rayDirection * rangeOfAttack, Color.aliceBlue);
@@ -161,10 +166,18 @@ public class AI_Basic_1 : AI_Base
 
     void Looking()
     {
+        UpdatePath(lastSeenPosition);
+
+        Debug.Log(pathComplete());
+
+        if (!pathComplete()) return;
+
         if (lookingTime > 0) // Certain amount of time to go to last seen position and find player
         {
             lookingTime -= Time.deltaTime;
-            UpdatePath(lastSeenPosition); // Player checks are done through Perception function
+            // Player checks are done through Perception function
+            transform.Rotate(Vector3.up * 10 * Time.deltaTime);
+
             return;
         }
 
@@ -175,9 +188,11 @@ public class AI_Basic_1 : AI_Base
         lookingTime = lookingStartTime;
     }
 
-    void Attack() // Implement Code for death of Player
+    IEnumerator Attack() // Implement Code for death of Player
     {
-        Debug.Log("Player DEAD");
+        playerTarget.GetComponent<HealthSystem>().ChangeHealth(-damage);
+        yield return new WaitForSeconds(attackDelay);
+        attackCoroutine = null;
     }
 
     // Checks for player

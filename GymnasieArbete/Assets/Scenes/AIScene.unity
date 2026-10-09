@@ -394,6 +394,11 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &45442162 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8337752286430213844, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+  m_PrefabInstance: {fileID: 1341636683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &73190687
 Mesh:
   m_ObjectHideFlags: 0
@@ -9296,7 +9301,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5737717423295836547, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 765005265}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8337752286430213844, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1479948012}
   m_SourcePrefab: {fileID: 100100000, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
 --- !u!20 &1381860464 stripped
 Camera:
@@ -10203,12 +10211,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8971021104689498513, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
   m_PrefabInstance: {fileID: 1341636683}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 45442162}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5c2c25dff5483e42b8f1d8d796f9f05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
+--- !u!114 &1479948012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45442162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f17ac925ae4b174d8131bc33e2e797f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  maxHealth: 5
+  health: 0
 --- !u!1 &1515366239
 GameObject:
   m_ObjectHideFlags: 0
@@ -11141,14 +11163,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48163d71fb054ac4b971d4f2109d5491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Test1
-  target: {fileID: 1799864342}
   eyesObject: {fileID: 509141477}
   idleStartTime: 4
   lookingStartTime: 5
   rangeOfAttack: 1
+  damage: 1
+  attackDelay: 2
   maxAngle: 30
   rayCount: 20
   rayLength: 10
+  patrolPositions:
+  - {fileID: 662027543}
+  - {fileID: 1145738934}
+  - {fileID: 1066153806}
+  - {fileID: 950905273}
+  - {fileID: 2111809064}
+  - {fileID: 1935739795}
+  - {fileID: 1159223248}
+  currentPatrolStation: 0
   currentState: 1
   previousState: 0
 --- !u!114 &1677623555
@@ -12074,7 +12106,7 @@ GameObject:
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1799864342
 Transform:
   m_ObjectHideFlags: 0
@@ -12084,7 +12116,7 @@ Transform:
   m_GameObject: {fileID: 1799864341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5486903, y: 1.5, z: 3.46}
+  m_LocalPosition: {x: 4.54, y: 1.55, z: 0.39999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

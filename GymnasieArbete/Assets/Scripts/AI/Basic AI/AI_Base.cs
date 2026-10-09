@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 [RequireComponent (typeof(AI_References))]
 public class AI_Base : MonoBehaviour
@@ -28,22 +29,19 @@ public class AI_Base : MonoBehaviour
         }
     }
 
+    public float RemainingDistance(Vector3 destination)
+    {
+        return !ai_References.navMeshAgent.pathPending ? ai_References.navMeshAgent.remainingDistance : Vector3.Distance(transform.position, destination);
+    }
+
     public Vector3 CheckDestination()
     {
         return ai_References.navMeshAgent.destination;
     }
 
-    // Fully taken from Unity Documentation FIX PLEASE IT DOES NOT WORK AT ALL
+    // Fully taken from Unity Documentation SHII WORKS
     protected bool pathComplete()
     {
-        if (Vector3.Distance(ai_References.navMeshAgent.destination, ai_References.navMeshAgent.transform.position) <= ai_References.navMeshAgent.stoppingDistance)
-        {
-            if (!ai_References.navMeshAgent.hasPath || ai_References.navMeshAgent.velocity.sqrMagnitude == 0f)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return ai_References.navMeshAgent.remainingDistance <= ai_References.navMeshAgent.stoppingDistance;
     }
 }

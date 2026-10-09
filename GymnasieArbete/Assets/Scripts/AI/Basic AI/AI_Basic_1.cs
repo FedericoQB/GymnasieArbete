@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class AI_Basic_1 : AI_Base
 {
     [Header("References")]
-    public Transform target;
+    //public Transform target;
     private Transform playerTarget;
     public GameObject eyesObject;
     
@@ -30,8 +30,11 @@ public class AI_Basic_1 : AI_Base
     [SerializeField] private float maxAngle = 45f;
     [SerializeField] private int rayCount = 9;
     [SerializeField] private float rayLength = 10f;
-    
 
+    // Patrol
+    [Header("Patrol Values")]
+    [SerializeField] private Transform[] patrolPositions;
+    [SerializeField] private int currentPatrolStation;
 
     bool isOnTarget;
 
@@ -54,7 +57,11 @@ public class AI_Basic_1 : AI_Base
         idleTime = idleStartTime;
         lookingTime = lookingStartTime;
 
+        currentPatrolStation = 0;
+
         ai_References.navMeshAgent.updateRotation = true;
+        ai_References.navMeshAgent.autoRepath = false;
+
     }
 
     // Update is called once per frame
@@ -108,11 +115,32 @@ public class AI_Basic_1 : AI_Base
 
     void Patrol()
     {
-        UpdatePath(target.position);
+        // Gets the position of the current patrol station
+        Vector3 targetPos = patrolPositions[currentPatrolStation].position;
 
-        if (CheckDestination() != target.position) return; // Makes sure that patrol works as intended
+        // Updates to the targetPos
+        UpdatePath(targetPos);
 
-        TransitionToState(AIState.Walking);
+        // Checks if it is on the target
+        if (RemainingDistance(targetPos) <= 0.5f)
+        {
+            TransitionToState(AIState.Idle);
+            print(patrolPositions.Length);
+            print(currentPatrolStation);
+            currentPatrolStation = (currentPatrolStation + 1 >= patrolPositions.Length) ? 0: currentPatrolStation+1;
+            print(currentPatrolStation);
+            /*
+            if (currentPatrolStation + 1 > patrolPositions.Length)
+            {
+                currentPatrolStation = 0;
+            }
+            else currentPatrolStation++;
+            */
+        }
+
+        //if (CheckDestination() != ) return; // Makes sure that patrol works as intended
+
+        //TransitionToState(AIState.Walking);
     }
 
     // State to make sure it goes to its target without changing course
@@ -176,7 +204,7 @@ public class AI_Basic_1 : AI_Base
         {
             lookingTime -= Time.deltaTime;
             // Player checks are done through Perception function
-            transform.Rotate(Vector3.up * 10 * Time.deltaTime);
+            transform.Rotate(Vector3.up * (360/lookingStartTime) * Time.deltaTime);
 
             return;
         }
@@ -246,7 +274,7 @@ public class AI_Basic_1 : AI_Base
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TargetTest") || other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             isOnTarget = true;
         }
@@ -254,7 +282,7 @@ public class AI_Basic_1 : AI_Base
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("TargetTest") || other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
             isOnTarget = false;
         }

@@ -125,17 +125,7 @@ public class AI_Basic_1 : AI_Base
         if (RemainingDistance(targetPos) <= 0.5f)
         {
             TransitionToState(AIState.Idle);
-            print(patrolPositions.Length);
-            print(currentPatrolStation);
             currentPatrolStation = (currentPatrolStation + 1 >= patrolPositions.Length) ? 0: currentPatrolStation+1;
-            print(currentPatrolStation);
-            /*
-            if (currentPatrolStation + 1 > patrolPositions.Length)
-            {
-                currentPatrolStation = 0;
-            }
-            else currentPatrolStation++;
-            */
         }
 
         //if (CheckDestination() != ) return; // Makes sure that patrol works as intended

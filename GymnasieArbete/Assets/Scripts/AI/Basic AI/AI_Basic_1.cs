@@ -61,7 +61,6 @@ public class AI_Basic_1 : AI_Base
 
         ai_References.navMeshAgent.updateRotation = true;
         ai_References.navMeshAgent.autoRepath = false;
-
     }
 
     // Update is called once per frame

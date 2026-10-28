@@ -11669,6 +11669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 525ad4c18e15cba46b4620a077ffe3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Advanced
+  npcSettings: {fileID: 11400000, guid: d2a9d56d4c91a354cbc51b488602a868, type: 2}
   waypoints:
   - {fileID: 662027543}
   - {fileID: 1145738934}
@@ -11677,10 +11678,6 @@ MonoBehaviour:
   - {fileID: 2111809064}
   - {fileID: 1935739795}
   - {fileID: 1159223248}
-  maxAngle: 45
-  rayCount: 9
-  rayLength: 10
-  patrolIdleTime: 2
 --- !u!114 &1595596910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11693,7 +11690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f46b26f148af345a5cdab918105cff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_References
-  navMeshAgent: {fileID: 0}
+  navMeshAgent: {fileID: 1595596911}
   pathUpdateDelay: 0.2
 --- !u!195 &1595596911
 NavMeshAgent:

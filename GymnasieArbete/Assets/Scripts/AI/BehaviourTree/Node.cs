@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace BehaviourTree
 {
@@ -12,7 +13,9 @@ namespace BehaviourTree
 
     public class Node
     {
-        protected AI_Base ai_Base;
+        protected NPCSettings npcSettings;
+
+        protected AI_Base aI_Base;
 
         protected NodeState state;
 
@@ -26,11 +29,35 @@ namespace BehaviourTree
             parent = null;
         }
 
-        public Node(AI_Base ai_Base)
+        /*
+         * This is a simple construct needing only the AI Base component
+         */
+        public Node(AI_Base aI_Base)
         {
             parent = null;
-            this.ai_Base = ai_Base;
+            this.aI_Base = aI_Base;
         }
+
+
+        /*
+         * This only takes in the settings if the Navmesh component is not needed
+         */
+        public Node(NPCSettings npcSettings)
+        {
+            parent = null;
+            this.npcSettings = npcSettings;
+        }
+
+        /*
+         * This takes in both the AI Base component and the settings if needed
+         */
+        public Node(AI_Base aI_Base, NPCSettings npcSettings)
+        {
+            parent = null;
+            this.aI_Base = aI_Base;
+            this.npcSettings = npcSettings;
+        }
+
 
         public Node(List<Node> children)
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PerceptionNode : Node
+public class Perception_Node : Node
 {
     private GameObject eyesObject;
     private LayerMask layerMask;
@@ -14,10 +14,10 @@ public class PerceptionNode : Node
     private int rayCount = 9;
     private float rayLength = 10f;
 
-    public PerceptionNode(AI_Base ai_Base,
+    public Perception_Node(AI_Base aI_Base,
         GameObject eyesObject, LayerMask layerMask, float maxUnAwareAngle,
         float maxLookingAngle, int rayCount, float rayLength
-        ) : base(ai_Base)
+        ) : base(aI_Base)
     {
         this.eyesObject = eyesObject;
         this.layerMask = layerMask;
@@ -49,6 +49,8 @@ public class PerceptionNode : Node
          * For a wider "understanding" of its environment
          */
 
+        /*
+
         for (int i = 0; i < rayCount; i++)
         {
             float currentAngle = Mathf.Lerp(-maxAngle, maxAngle, (float)i / (rayCount - 1)); // Calculates angle for current raycast
@@ -69,5 +71,6 @@ public class PerceptionNode : Node
 
         // Sets global value to local value
         playerVisible = raySeesPlayer;
+        */
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System;
 
 public class TaskPatrol : Node
 {
@@ -14,12 +15,19 @@ public class TaskPatrol : Node
     private float waitCounter = 0f;
     private bool waiting = false;
 
-    public TaskPatrol(AI_Base ai_Base, Transform[] patrolPositions, float idleTime) : base(ai_Base)
+    /*
+    public TaskPatrol(AI_Base aI_Base, Transform[] patrolPositions, float idleTime) : base(aI_Base)
     {
         _patrolPositions = patrolPositions;
         waitTime = idleTime;
     }
-
+    */
+    public TaskPatrol(AI_Base aI_Base, NPCSettings npcSettings, Transform[] patrolPositions) : base(aI_Base, npcSettings)
+    {
+        _patrolPositions = patrolPositions;
+        waitTime = npcSettings.patrolIdleTime;
+    }
+    
     public override NodeState Evaluate()
     {
         if (waiting)
@@ -34,10 +42,12 @@ public class TaskPatrol : Node
             targetPos = _patrolPositions[_currentPatrolStation].position;
 
             // Updates to the targetPos
-            ai_Base.UpdatePath(targetPos);
+            aI_Base.UpdatePath(targetPos);
+
+            
 
             // Checks if it is on the target
-            if (ai_Base.RemainingDistance(targetPos) <= 0.5f)
+            if (aI_Base.RemainingDistance(targetPos) <= 0.5f)
             {
                 waitCounter = 0f;
                 waiting = true;

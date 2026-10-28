@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AI_Advanced : BTree
 {
-    public UnityEngine.Transform[] waypoints;
+    public Transform[] waypoints;
 
     // Perception
     [Header("Perception Values")]
@@ -18,7 +18,14 @@ public class AI_Advanced : BTree
 
     protected override Node SetupTree()
     {
-        Node root = new TaskPatrol(this, waypoints, patrolIdleTime);
+        Node root = new Selector(new List<Node>
+        {
+            new Sequence(new List<Node>
+            {
+                // Perception Node
+            }),
+            new TaskPatrol(this, waypoints, patrolIdleTime),
+        });
 
         return root;
     }

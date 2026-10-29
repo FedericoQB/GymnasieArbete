@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 using System;
 
-public class TaskPatrol : Node
+public class Patrol_Node : Node
 {
     private Transform[] _patrolPositions;
     private int _currentPatrolStation = 0;
@@ -15,21 +15,20 @@ public class TaskPatrol : Node
     private float waitCounter = 0f;
     private bool waiting = false;
 
-    /*
-    public TaskPatrol(AI_Base aI_Base, Transform[] patrolPositions, float idleTime) : base(aI_Base)
-    {
-        _patrolPositions = patrolPositions;
-        waitTime = idleTime;
-    }
-    */
-    public TaskPatrol(AI_Base aI_Base, NPCSettings npcSettings, Transform[] patrolPositions) : base(aI_Base, npcSettings)
+    AI_Memory aI_Memory;
+
+    public Patrol_Node(AI_Base aI_Base, NPCSettings npcSettings, Transform[] patrolPositions) : base(aI_Base, npcSettings)
     {
         _patrolPositions = patrolPositions;
         waitTime = npcSettings.patrolIdleTime;
+
+        aI_Memory = aI_Base.GetMemory();   
     }
     
     public override NodeState Evaluate()
     {
+        aI_Memory.TransitionToState(AI_Memory.AwarenessState.Unaware);
+
         if (waiting)
         {
             waitCounter += Time.deltaTime;

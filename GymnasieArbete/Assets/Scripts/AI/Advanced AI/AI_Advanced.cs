@@ -8,38 +8,53 @@ public class AI_Advanced : BTree
 
     public Transform[] waypoints;
 
+    [SerializeField] private Transform eyesTransform;
 
     protected override Node SetupTree()
     {
+        // ACTUAL TREE THAT IS TO BE USED IN FINAL PRODUCT
         Node root = new Selector(new List<Node>
         {
             // Senses Sequence
             new Sequence(new List<Node>
             {
-                // Each unique Senses, if one picks something up, it will return succesful
-                new Selector(new List<Node>
-                {
-                    // Different Perceptions
-                }),
+                new Perception_Node(this, npcSettings, eyesTransform),
+            }),
+
+            // Investigation Sequence
+            new Sequence(new List<Node>
+            {
+                new Echolocation_Node(this, npcSettings),
+                new Stalk_Node(this, npcSettings),
 
                 // Investigate
-                new Sequence(new List<Node>
-                {
                     // Search the Area
 
                     // Uses "echolocation" to further investigate the area
-                    new Echolocation_Node(this, npcSettings),
-                }),
+            }),
+
+            // The fallback
+            new Patrol_Node(this, npcSettings, waypoints),
+        });
+
+        // Testing tree
+        Node root2 = new Selector(new List<Node>
+        {
+            // Senses Sequence
+            new Sequence(new List<Node>
+            {
+                new Perception_Node(this, npcSettings, eyesTransform),
                 new Chase_Node(this, npcSettings),
             }),
 
             // The fallback
-            new TaskPatrol(this, npcSettings, waypoints),
+            new Patrol_Node(this, npcSettings, waypoints),
         });
 
-        //Node root2 = new Echolocation_Node(this, npcSettings);
+        // Testing Root - Replace Node to the testing Node and change return value to root2
+        Node root3 = new Perception_Node(this, npcSettings, eyesTransform);
 
-        // Can use multiple Nodes and change through the return value
-        return root;
+        // Can use multiple roots and change active through the return value
+        return root2;
     }
 }

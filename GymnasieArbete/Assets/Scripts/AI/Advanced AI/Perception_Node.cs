@@ -6,38 +6,41 @@ using UnityEngine.AI;
 
 public class Perception_Node : Node
 {
-    private GameObject eyesObject;
+    private Transform eyesTransform;
     private LayerMask layerMask;
 
+    private float angle;
+
     private float maxUnAwareAngle = 45f;
-    private float maxLookingAngle = 45f;
+    private float maxAwareAngle = 45f;
     private int rayCount = 9;
     private float rayLength = 10f;
 
-    public Perception_Node(AI_Base aI_Base,
-        GameObject eyesObject, LayerMask layerMask, float maxUnAwareAngle,
-        float maxLookingAngle, int rayCount, float rayLength
-        ) : base(aI_Base)
+    Transform playerTransform;
+
+    AI_Memory aI_Memory;
+
+
+    public Perception_Node(AI_Base aI_Base, NPCSettings npcSettings, Transform eyesTransform) : base(aI_Base, npcSettings)
     {
-        this.eyesObject = eyesObject;
-        this.layerMask = layerMask;
-        this.maxUnAwareAngle = maxUnAwareAngle;
-        this.maxLookingAngle = maxLookingAngle;
-        this.rayCount = rayCount;
-        this.rayLength = rayLength;
+        this.eyesTransform = eyesTransform;
+        maxUnAwareAngle = npcSettings.maxUnAwareAngle;
+        maxAwareAngle = npcSettings.maxAwareAngle;
+        rayCount = npcSettings.rayCountVision;
+        rayLength = npcSettings.rayLengthVision;
+
+        aI_Memory = aI_Base.GetMemory();
     }
 
     public override NodeState Evaluate()
     {
-        Perception();
-
-        state = NodeState.RUNNING;
+        state = Perception();
         return state;
     }
 
-    void Perception()
+    NodeState Perception()
     {
-        Vector3 origin = eyesObject.transform.position;
+        Vector3 origin = eyesTransform.transform.position;
 
         layerMask = LayerMask.GetMask("Wall", "Player");
 
@@ -49,13 +52,21 @@ public class Perception_Node : Node
          * For a wider "understanding" of its environment
          */
 
-        /*
+        switch (aI_Memory.currentState)
+        {
+            case AI_Memory.AwarenessState.Unaware:
+                angle = maxUnAwareAngle;
+                break;
+            case AI_Memory.AwarenessState.Aware:
+                angle = maxAwareAngle;
+                break;
+        }
 
         for (int i = 0; i < rayCount; i++)
         {
-            float currentAngle = Mathf.Lerp(-maxAngle, maxAngle, (float)i / (rayCount - 1)); // Calculates angle for current raycast
+            float currentAngle = Mathf.Lerp(-angle, angle, (float)i / (rayCount - 1)); // Calculates angle for current raycast
 
-            Vector3 rayDirection = Quaternion.AngleAxis(currentAngle, Vector3.up) * eyesObject.transform.forward; // Sets angle for the current raycast
+            Vector3 rayDirection = Quaternion.AngleAxis(currentAngle, Vector3.up) * eyesTransform.transform.forward; // Sets angle for the current raycast
 
             RaycastHit hit;
             if (Physics.Raycast(origin, rayDirection, out hit, rayLength, layerMask)) // Sends out a Raycast for the player
@@ -63,14 +74,23 @@ public class Perception_Node : Node
                 if (hit.collider.CompareTag("Player")) // Checks if its the Player
                 {
                     raySeesPlayer = true;
-                    playerTarget = hit.collider.transform; // Sets playerTarget to the hit transform
+                    playerTransform = hit.collider.transform; // Sets playerTarget to the hit transform
+                    aI_Memory.SetTarget(playerTransform);
                 }
             }
             Debug.DrawRay(origin, rayDirection * rayLength, Color.orangeRed);
         }
 
-        // Sets global value to local value
-        playerVisible = raySeesPlayer;
-        */
+        if (raySeesPlayer)
+        {
+            aI_Memory.TransitionToState(AI_Memory.AwarenessState.Aware);
+            return NodeState.SUCCESS;
+        }
+
+        aI_Memory.LoseSight();
+        return NodeState.FAILURE;
+
     }
+
+    
 }

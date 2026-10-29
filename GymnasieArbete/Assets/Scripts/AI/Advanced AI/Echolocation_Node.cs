@@ -15,13 +15,17 @@ public class Echolocation_Node : Node
 
     Transform playerTransform;
 
+    AI_Memory aI_Memory;
+
     public Echolocation_Node(AI_Base aI_Base, NPCSettings npcSettings) : base(aI_Base, npcSettings)
     {
-        rayCount = npcSettings.rayCount;
-        rayLength = npcSettings.rayLength;
+        rayCount = npcSettings.rayCountEcho;
+        rayLength = npcSettings.rayLengthEcho;
 
         delayInterval = npcSettings.delayInterval;
         delayCounter = delayInterval;
+
+        aI_Memory = aI_Base.GetMemory();
     }
 
     public override NodeState Evaluate()
@@ -51,6 +55,7 @@ public class Echolocation_Node : Node
                 {
                     raySeesPlayer = true;
                     playerTransform = hit.transform;
+                    aI_Memory.SetTarget(playerTransform);
                 }
             }
             Debug.DrawRay(originTransform.position, rayDirection * rayLength, Color.orangeRed);
@@ -58,10 +63,11 @@ public class Echolocation_Node : Node
 
         if (raySeesPlayer)
         {
-            parent.parent.SetData("Target", playerTransform);
             return NodeState.SUCCESS;
         }
-        else return NodeState.FAILURE;
+
+        aI_Memory.LoseSight();
+        return NodeState.FAILURE;
 
         // Replace with checking if player is moving
     }

@@ -12,7 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e952d96ce87bacb4283151236cbe8947, type: 3}
   m_Name: AdvancedAISettings
   m_EditorClassIdentifier: Assembly-CSharp::NPCSettings
-  rayCount: 90
-  rayLength: 10
+  maxUnAwareAngle: 45
+  maxAwareAngle: 90
+  rayCountVision: 9
+  rayLengthVision: 10
+  rayCountEcho: 9
+  rayLengthEcho: 10
   delayInterval: 5
+  fearGauge: {x: 0, y: 10}
+  maxDistance: 5
+  minDistance: 2
   patrolIdleTime: 2

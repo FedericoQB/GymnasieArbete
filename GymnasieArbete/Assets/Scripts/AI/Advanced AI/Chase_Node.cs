@@ -16,7 +16,7 @@ public class Chase_Node : Node
     {
         Transform target = aI_Memory.currentTarget;
 
-        if (aI_Base.RemainingDistance(target.position) > 0.5f)
+        if (aI_Base.GetRemainingDistance(target.position) > 0.5f)
         {
             aI_Base.UpdatePath(target.position);
         }

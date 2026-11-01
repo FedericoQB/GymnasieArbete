@@ -44,8 +44,29 @@ public class AI_Advanced : BTree
             new Sequence(new List<Node>
             {
                 new Perception_Node(this, npcSettings, eyesTransform),
-                new Chase_Node(this, npcSettings),
+                /* For the hearing node, it can instead of instantly initiating chase or stalk, it can add a lastknownposition
+                 * Which will lead to the investigation node to be used.
+                */
+
+                // Decides between chasing or stalking depending on the player's vision
+                new Selector(new List<Node>
+                {
+                    // First sequence runs if the player can see the Agent - Chase
+                    new Sequence(new List<Node>
+                    {
+                        new Condition_Node(() => aI_Memory.playerSeesAI),
+                        new Chase_Node(this, npcSettings)
+                    }),
+
+                    // Second sequence runs if the player can NOT see the Agent - Stalk
+                    new Sequence(new List<Node>
+                    {
+                        new Stalk_Node(this, npcSettings)
+                    }),
+                }),
             }),
+
+            new Investigate_Node(this, npcSettings),
 
             // The fallback
             new Patrol_Node(this, npcSettings, waypoints),

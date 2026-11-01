@@ -21,6 +21,8 @@ public class AI_Memory : MonoBehaviour
 
     public float lastDetectionTime { get; private set; }
 
+    public bool playerSeesAI;
+
     public enum AwarenessState
     {
         Unaware,
@@ -46,6 +48,8 @@ public class AI_Memory : MonoBehaviour
 
         currentTarget = target;
         lastKnownTargetPosition = target.position;
+
+        hasLastKnownPosition = true;
         playerDetected = true;
         lastDetectionTime = Time.time;
     }
@@ -56,13 +60,13 @@ public class AI_Memory : MonoBehaviour
             return;
 
         lastKnownTargetPosition = currentTarget.position;
+        lastDetectionTime = Time.time;
     }
 
     public void LoseSight()
     {
         playerDetected = false;
         currentTarget = null;
-        hasLastKnownPosition = false;
     }
 
     public void SetFear(float value)
@@ -74,6 +78,6 @@ public class AI_Memory : MonoBehaviour
     {
         currentTarget = null;
         playerDetected = false;
-        
+        hasLastKnownPosition = false;
     }
 }

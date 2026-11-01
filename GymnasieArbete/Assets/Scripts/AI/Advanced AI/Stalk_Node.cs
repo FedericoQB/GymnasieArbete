@@ -34,7 +34,7 @@ public class Stalk_Node : Node
 
         if (target == null) return NodeState.FAILURE;
 
-        float distance = aI_Base.CheckDistance(target.position);
+        float distance = aI_Base.GetDistance(target.position);
 
 
         if (distance > maxDistance)
@@ -45,6 +45,8 @@ public class Stalk_Node : Node
         {
             aI_Base.PauseAgent(true);
         }
+
+        // Expand function
 
         return NodeState.RUNNING;
     }

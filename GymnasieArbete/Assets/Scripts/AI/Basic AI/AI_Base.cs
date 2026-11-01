@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent (typeof(AI_References))]
 public class AI_Base : MonoBehaviour
@@ -44,29 +45,62 @@ public class AI_Base : MonoBehaviour
         ai_References.navMeshAgent.isStopped = paused;
     }
 
-    public float RemainingDistance(Vector3 destination)
+    public float GetRemainingDistance(Vector3 destination)
     {
         return !ai_References.navMeshAgent.pathPending ? ai_References.navMeshAgent.remainingDistance : Vector3.Distance(transform.position, destination);
     }
 
-    public float CheckDistance(Vector3 destination)
+    public float GetStoppingDistance()
+    {
+        return ai_References.navMeshAgent.stoppingDistance;
+    }
+
+    public float GetDistance(Vector3 destination)
     {
         return Vector3.Distance(transform.position, destination);
     }
 
-    public Vector3 CheckDestination()
+    public Vector3 GetDestination()
     {
         return ai_References.navMeshAgent.destination;
     }
 
-    // Fully taken from Unity Documentation SHII WORKS
-    protected bool pathComplete()
+    // Fully taken from Unity Documentation
+    protected bool IsPathComplete()
     {
         return ai_References.navMeshAgent.remainingDistance <= ai_References.navMeshAgent.stoppingDistance;
+    }
+
+    public bool IsDestinationValid(Vector3 destination)
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        bool pathFound = ai_References.navMeshAgent.CalculatePath(destination, path);
+        return pathFound && path.status == NavMeshPathStatus.PathComplete;
     }
 
     public AI_Memory GetMemory()
     {
         return aI_Memory;
+    }
+
+    public NavMeshAgent GetNavMeshComponent()
+    {
+        return ai_References.navMeshAgent;
+    }
+
+    public void SetUpdateRotation(bool condition)
+    {
+        GetNavMeshComponent().autoRepath = condition;
+    }
+
+    public void AgentLookAt(Vector3 target, float rotationSpeed)
+    {
+        Vector3 direction = target - transform.position;
+        direction.y = 0f;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 }

@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: AdvancedAISettings
   m_EditorClassIdentifier: Assembly-CSharp::NPCSettings
   maxUnAwareAngle: 45
-  maxAwareAngle: 90
-  rayCountVision: 9
+  maxAwareAngle: 60
+  rayCountVision: 18
   rayLengthVision: 10
+  rotationSpeed: 10
   rayCountEcho: 9
   rayLengthEcho: 10
   delayInterval: 5
   fearGauge: {x: 0, y: 10}
   maxDistance: 5
   minDistance: 2
+  searchTimeRange: {x: 30, y: 50}
+  searchRadius: 6
   patrolIdleTime: 2

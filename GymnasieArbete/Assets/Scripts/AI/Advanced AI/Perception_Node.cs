@@ -45,7 +45,7 @@ public class Perception_Node : Node
         layerMask = LayerMask.GetMask("Wall", "Player");
 
         // Temporary boolean for checking rays
-        bool raySeesPlayer = false;
+        Transform detectedPlayer = null;
 
         /*
          * Possible addition to the reactive AI, increasing the Angle when chasing and looking and narrowing it down when patrolling.
@@ -73,17 +73,17 @@ public class Perception_Node : Node
             {
                 if (hit.collider.CompareTag("Player")) // Checks if its the Player
                 {
-                    raySeesPlayer = true;
-                    playerTransform = hit.collider.transform; // Sets playerTarget to the hit transform
-                    aI_Memory.SetTarget(playerTransform);
+                    detectedPlayer = hit.collider.transform; // Sets playerTarget to the hit transform
                 }
             }
             Debug.DrawRay(origin, rayDirection * rayLength, Color.orangeRed);
         }
 
-        if (raySeesPlayer)
+        if (detectedPlayer != null)
         {
+            aI_Memory.SetTarget(detectedPlayer);
             aI_Memory.TransitionToState(AI_Memory.AwarenessState.Aware);
+            aI_Base.AgentLookAt(detectedPlayer.position, npcSettings.rotationSpeed);
             return NodeState.SUCCESS;
         }
 

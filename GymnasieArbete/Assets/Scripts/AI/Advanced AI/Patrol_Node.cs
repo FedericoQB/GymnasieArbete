@@ -27,7 +27,8 @@ public class Patrol_Node : Node
     
     public override NodeState Evaluate()
     {
-        aI_Memory.TransitionToState(AI_Memory.AwarenessState.Unaware);
+        if (aI_Memory.currentState != AI_Memory.AwarenessState.Unaware) aI_Memory.TransitionToState(AI_Memory.AwarenessState.Unaware);
+        aI_Base.SetUpdateRotation(true);
 
         if (waiting)
         {
@@ -46,7 +47,7 @@ public class Patrol_Node : Node
             
 
             // Checks if it is on the target
-            if (aI_Base.RemainingDistance(targetPos) <= 0.5f)
+            if (aI_Base.GetRemainingDistance(targetPos) <= 0.5f)
             {
                 waitCounter = 0f;
                 waiting = true;

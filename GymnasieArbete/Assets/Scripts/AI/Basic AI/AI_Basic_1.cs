@@ -121,7 +121,7 @@ public class AI_Basic_1 : AI_Base
         UpdatePath(targetPos);
 
         // Checks if it is on the target
-        if (RemainingDistance(targetPos) <= 0.5f)
+        if (GetRemainingDistance(targetPos) <= 0.5f)
         {
             TransitionToState(AIState.Idle);
             currentPatrolStation = (currentPatrolStation + 1 >= patrolPositions.Length) ? 0: currentPatrolStation+1;
@@ -146,7 +146,7 @@ public class AI_Basic_1 : AI_Base
             return;
         }
 
-        if (CheckDestination() == lastSeenPosition && previousState != AIState.Looking)
+        if (GetDestination() == lastSeenPosition && previousState != AIState.Looking)
         {
             TransitionToState(AIState.Patrol);
         }
@@ -185,9 +185,9 @@ public class AI_Basic_1 : AI_Base
     {
         UpdatePath(lastSeenPosition);
 
-        Debug.Log(pathComplete());
+        Debug.Log(IsPathComplete());
 
-        if (!pathComplete()) return;
+        if (!IsPathComplete()) return;
 
         if (lookingTime > 0) // Certain amount of time to go to last seen position and find player
         {

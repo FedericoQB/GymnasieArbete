@@ -6043,18 +6043,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   soundGroups:
-  - groupName: Player
-    soundInfo:
-    - audioName: Breathing
-      soundClip: {fileID: 0}
-      volume: 1
   - groupName: Ambience
+    soundInfo:
+    - audioName: Growl
+      soundClip: {fileID: 8300000, guid: e22a3a578faa43940be6294c7ff42590, type: 3}
+      volume: 1
+  - groupName: Player
     soundInfo: []
   - groupName: Monster
     soundInfo: []
   masterVolumeMultiplier: 1
   audioObjectPrefab: {fileID: 2387401330498592351, guid: d34bc273fb9e4b34b94fe7c0b88a81ac, type: 3}
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 1479948007}
 --- !u!4 &907100323
 Transform:
   m_ObjectHideFlags: 0

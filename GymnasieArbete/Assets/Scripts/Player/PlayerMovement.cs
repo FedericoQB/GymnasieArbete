@@ -52,6 +52,13 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveDirection;
 
+    [Header("Sound")]
+    [SerializeField] float stepWalkInterval = 0.4f;
+    [SerializeField] float stepSprintInterval = 0.35f;
+    [SerializeField] float stepCrouchInterval = 0.65f;
+    float stepInterval;
+    float footstepTimer;
+
     [Header("State")]
     public MovementState state;
     public enum MovementState
@@ -80,6 +87,30 @@ public class PlayerMovement : MonoBehaviour
         StateHandler();
         GroundCheck();
         Drag();
+
+        if (rb.linearVelocity.magnitude <= 0.5f || state == MovementState.air) { footstepTimer = 0f; return; }
+
+
+        footstepTimer += Time.deltaTime;
+
+        if (footstepTimer >= stepInterval)
+        {
+            footstepTimer = 0f;
+
+            if (state == MovementState.crouching)
+            {
+                // It plays a quieter footstep
+                AudioManager.PlaySound(SoundType.Player, 1,
+                new Vector3(transform.position.x, transform.position.y - playerHeight * 0.5f, transform.position.z));
+            }
+            else
+            {
+                // It plays a normal footstep
+                AudioManager.PlaySound(SoundType.Player, 0,
+                new Vector3(transform.position.x, transform.position.y - playerHeight * 0.5f, transform.position.z));
+            }
+            
+        }
     }
 
     private void FixedUpdate()
@@ -117,21 +148,24 @@ public class PlayerMovement : MonoBehaviour
 
     void StateHandler()
     {
-        if (Input.GetKey(crouchKey)) // Checks input
+        if (grounded && Input.GetKey(crouchKey)) // Checks input
         {
             state = MovementState.crouching;
             moveSpeed = crouchSpeed;
+            stepInterval = stepCrouchInterval;
         }
 
         if (grounded && Input.GetKey(sprintKey) && stamina > 0) // Checks grounded, input and if player has stamina. Needs UI to show stamina
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            stepInterval = stepSprintInterval;
         }
         else if (grounded && !isCrouching) // Checks grounded and input
         {
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            stepInterval = stepWalkInterval;
         }
         else if (!grounded) // If player is in the air
         {
@@ -193,7 +227,8 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
-        AudioManager.audioManager.PlayOneShot(0, 0, this.transform);
+        AudioManager.PlaySound(SoundType.Ambience, 0,
+            new Vector3(transform.position.x, transform.position.y - playerHeight * 0.5f, transform.position.z));
     }
 
     void ResetJump()

@@ -6022,7 +6022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 907100323}
-  - component: {fileID: 907100322}
+  - component: {fileID: 907100324}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6030,31 +6030,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &907100322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 907100321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 655703435a5f4f94d9a506b32c38e4d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  soundGroups:
-  - groupName: Ambience
-    soundInfo:
-    - audioName: Growl
-      soundClip: {fileID: 8300000, guid: e22a3a578faa43940be6294c7ff42590, type: 3}
-      volume: 1
-  - groupName: Player
-    soundInfo: []
-  - groupName: Monster
-    soundInfo: []
-  masterVolumeMultiplier: 1
-  audioObjectPrefab: {fileID: 2387401330498592351, guid: d34bc273fb9e4b34b94fe7c0b88a81ac, type: 3}
-  playerTransform: {fileID: 1479948007}
 --- !u!4 &907100323
 Transform:
   m_ObjectHideFlags: 0
@@ -6070,6 +6045,42 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &907100324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907100321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655703435a5f4f94d9a506b32c38e4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  soundGroups:
+  - groupName: Ambience
+    soundInfo:
+    - audioName: Deep Growl
+      soundClip: {fileID: 8300000, guid: e22a3a578faa43940be6294c7ff42590, type: 3}
+      volume: 0.6
+      pitchRange: {x: 0.9, y: 1.1}
+      randomizePitch: 1
+  - groupName: Player
+    soundInfo:
+    - audioName: Normal Footstep
+      soundClip: {fileID: 8300000, guid: 0ee3befb8d4b16441ad0abc1e5418847, type: 3}
+      volume: 0.2
+      pitchRange: {x: 0.95, y: 1.05}
+      randomizePitch: 1
+    - audioName: Crouching Footstep
+      soundClip: {fileID: 8300000, guid: 0ee3befb8d4b16441ad0abc1e5418847, type: 3}
+      volume: 0.05
+      pitchRange: {x: 0.95, y: 1.05}
+      randomizePitch: 1
+  - groupName: Monster
+    soundInfo: []
+  masterVolumeMultiplier: 1
+  audioObjectPrefab: {fileID: 2387401330498592351, guid: d34bc273fb9e4b34b94fe7c0b88a81ac, type: 3}
 --- !u!1001 &929955869
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9840,6 +9851,22 @@ PrefabInstance:
     - target: {fileID: 2378498601243075431, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
       propertyPath: m_ReceiveShadows
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864116737010396893, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+      propertyPath: stepInterval
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864116737010396893, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+      propertyPath: stepWalkInterval
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864116737010396893, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+      propertyPath: stepCrouchInterval
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864116737010396893, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
+      propertyPath: stepSprintInterval
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5737717423295836547, guid: 867cfac097e654e42a5ec6c3a79801a2, type: 3}
       propertyPath: m_LocalPosition.x

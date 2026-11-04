@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using UnityEngine.AI;
+public enum SoundType
+{
+    Ambience,
+    Player,
+    Monster
+}
 
 [System.Serializable]
 public class SoundInformation
@@ -10,29 +15,43 @@ public class SoundInformation
     public string audioName;
     public AudioClip soundClip;
     public float volume = 1f;
+    public Vector2 pitchRange = new Vector2(0.9f, 1.1f);
+    public bool randomizePitch = true;
 }
 
 [System.Serializable]
 public class SoundGroups
 {
-    public string groupName;
+    [HideInInspector] public string groupName;
     public List<SoundInformation> soundInfo = new List<SoundInformation>();
 }
 
+
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager audioManager;
+    private static AudioManager instance;
 
-    public List<SoundGroups> soundGroups = new List<SoundGroups>();
+    [SerializeField] private SoundGroups[] soundGroups;
     private List<GameObject> audioPrefabs = new List<GameObject>();
     public float masterVolumeMultiplier;
     public GameObject audioObjectPrefab;
 
-    public Transform playerTransform;
+    private void Reset()
+    {
+        string[] names = Enum.GetNames(typeof(SoundType));
+
+        soundGroups = new SoundGroups[names.Length];
+
+        for (int i = 0; i < soundGroups.Length; i++)
+        {
+            soundGroups[i] = new SoundGroups();
+            soundGroups[i].groupName = names[i];
+        }
+    }
 
     private void Awake()
     {
-        audioManager = this;
+        instance = this;
     }
 
     private void Update()
@@ -40,27 +59,21 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    public void PlayOneShot(int audioGroup, int audioIndex, Transform spawnTransform)
+    public static void PlaySound(SoundType sound, int audioIndex, Vector3 spawnPosition)
     {
-        GameObject soundPrefab = Instantiate(audioObjectPrefab, spawnTransform.position, Quaternion.identity, spawnTransform);
+        GameObject soundPrefab = Instantiate(instance.audioObjectPrefab, spawnPosition, Quaternion.identity);
 
-        AudioSource audioSource = soundPrefab.GetComponent<AudioSource>();
-        audioPrefabs.Add(soundPrefab);
+        //instance.audioPrefabs.Add(soundPrefab);
 
-        audioSource.clip = soundGroups[audioGroup].soundInfo[audioIndex].soundClip;
-        audioSource.volume = soundGroups[audioIndex].soundInfo[audioIndex].volume * masterVolumeMultiplier;
-        audioSource.Play();
+        //AudioClip clip = instance.soundGroups[(int)sound].soundInfo[audioIndex].soundClip;
+        //float volume = instance.soundGroups[(int)sound].soundInfo[audioIndex].volume * instance.masterVolumeMultiplier;
 
-        if (!audioSource.isPlaying)
-        {
-            audioPrefabs.Remove(soundPrefab);
-            Destroy(soundPrefab);
-        }
+        soundPrefab.GetComponent<AudioObject>().Play(instance.soundGroups[(int)sound].soundInfo[audioIndex]);
     }
 
     public void Ambience()
     {
-        GameObject soundPrefab = Instantiate(audioObjectPrefab, playerTransform.position, Quaternion.identity, transform);
+        GameObject soundPrefab = Instantiate(audioObjectPrefab, transform.position, Quaternion.identity, transform);
 
         AudioSource audioSource = soundPrefab.GetComponent<AudioSource>();
         audioPrefabs.Add(soundPrefab);
@@ -80,9 +93,9 @@ public class AudioManager : MonoBehaviour
     Vector3 AmbientAreaPosition()
     {
         // Generate a random horizontal offset
-        Vector2 randomOffset = Random.insideUnitCircle * 8;
+        Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * 8;
 
-        Vector3 randomPoint = playerTransform.position + new Vector3(randomOffset.x, 0f, randomOffset.y);
+        Vector3 randomPoint = transform.position + new Vector3(randomOffset.x, 0f, randomOffset.y);
         return randomPoint;
     }
 }

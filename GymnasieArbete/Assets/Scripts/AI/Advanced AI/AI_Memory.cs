@@ -4,7 +4,8 @@ public class AI_Memory : MonoBehaviour
 {
     // Stores Variables that the AI picks up during runtime
 
-    public Vector3 lastKnownTargetPosition { get; set; }
+    public Vector3 lastSeenTargetPosition { get; set; }
+    public Vector3 lastHeardTargetPosition { get; set; }
 
     public bool hasLastKnownPosition { get; private set; }
 
@@ -47,7 +48,7 @@ public class AI_Memory : MonoBehaviour
             return;
 
         currentTarget = target;
-        lastKnownTargetPosition = target.position;
+        lastSeenTargetPosition = target.position;
 
         hasLastKnownPosition = true;
         playerDetected = true;
@@ -59,7 +60,7 @@ public class AI_Memory : MonoBehaviour
         if (currentTarget == null)
             return;
 
-        lastKnownTargetPosition = currentTarget.position;
+        lastSeenTargetPosition = currentTarget.position;
         lastDetectionTime = Time.time;
     }
 
@@ -79,5 +80,16 @@ public class AI_Memory : MonoBehaviour
         currentTarget = null;
         playerDetected = false;
         hasLastKnownPosition = false;
+
+
+    }
+
+    // Add hearing, through node or memory
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Sound"))
+        {
+            lastHeardTargetPosition = other.transform.position;
+        }
     }
 }

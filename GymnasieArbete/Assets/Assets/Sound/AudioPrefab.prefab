@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4320091048564104294}
   - component: {fileID: 6091704513887957778}
   - component: {fileID: -2483425800635533597}
-  m_Layer: 0
+  - component: {fileID: 8332214717093254486}
+  m_Layer: 10
   m_Name: AudioPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,3 +143,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac51a46c5b291eb4096c11a4df2ca18c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioObject
+--- !u!135 &8332214717093254486
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2387401330498592351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AudioObject : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class AudioObject : MonoBehaviour
     private void Awake()
     {
         source = GetComponent<AudioSource>();
+        GetComponent<SphereCollider>().isTrigger = true;
     }
 
     public void Play(SoundInformation sound)
@@ -17,6 +19,7 @@ public class AudioObject : MonoBehaviour
         }
 
         source.PlayOneShot(sound.soundClip, sound.volume);
+        GetComponent<SphereCollider>().radius = sound.volume;
 
         float duration = sound.soundClip.length / Mathf.Abs(source.pitch);
         Destroy(gameObject, duration);

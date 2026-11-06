@@ -61,6 +61,7 @@ public class AI_Advanced : BTree
                     // Second sequence runs if the player can NOT see the Agent - Stalk
                     new Sequence(new List<Node>
                     {
+                        new Condition_Node(() => aI_Memory.playerDetected),
                         new Stalk_Node(this, npcSettings)
                     }),
                 }),

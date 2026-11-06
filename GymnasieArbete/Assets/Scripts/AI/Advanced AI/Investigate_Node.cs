@@ -41,7 +41,7 @@ public class Investigate_Node : Node
             return NodeState.FAILURE;
         }
             
-        Vector3 lastKnownPosition = aI_Memory.lastKnownTargetPosition;
+        Vector3 lastKnownPosition = aI_Memory.lastSeenTargetPosition;
 
         Debug.Log("Investigating");
 
@@ -61,7 +61,7 @@ public class Investigate_Node : Node
             searching = true;
             searchTimer = Time.time + searchDuration;
 
-            searchPosition = aI_Memory.lastKnownTargetPosition;
+            searchPosition = aI_Memory.lastSeenTargetPosition;
             hasSearchDestination = false;
         }
 

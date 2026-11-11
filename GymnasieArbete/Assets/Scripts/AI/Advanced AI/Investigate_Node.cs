@@ -40,7 +40,7 @@ public class Investigate_Node : Node
             hasSearchDestination = false;
             return NodeState.FAILURE;
         }
-        else if (aI_Memory.hasLastHeardPosition) // If it heard something, set that as the position
+        else if (aI_Memory.hasLastHeardPosition && !aI_Memory.hasLastKnownPosition) // If it heard something, set that as the position
         {
             lastKnownPosition = aI_Memory.lastHeardTargetPosition;
         }

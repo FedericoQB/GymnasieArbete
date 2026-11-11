@@ -36,6 +36,11 @@ public class AI_Basic_1 : AI_Base
     [SerializeField] private Transform[] patrolPositions;
     [SerializeField] private int currentPatrolStation;
 
+    [Header("Stalk Values")]
+    [SerializeField] float maxDistance = 10f;
+    [SerializeField] float minDistance = 8f;
+
+
     bool isOnTarget;
 
     // States
@@ -46,7 +51,7 @@ public class AI_Basic_1 : AI_Base
         Walking,
         Chase,
         Looking
-    }
+    } // Add stalk and remove walking
 
     [SerializeField] private AIState currentState = AIState.Patrol;
     [SerializeField] private AIState previousState;
@@ -77,7 +82,7 @@ public class AI_Basic_1 : AI_Base
             case AIState.Patrol:
                 Patrol();
                 break;
-            case AIState.Walking:
+            case AIState.Walking: // Useless currently
                 Walking();
                 break;
             case AIState.Chase:
@@ -86,6 +91,7 @@ public class AI_Basic_1 : AI_Base
             case AIState.Looking:
                 Looking();
                 break;
+                // Add stalk
         }
     }
 
@@ -133,6 +139,7 @@ public class AI_Basic_1 : AI_Base
     }
 
     // State to make sure it goes to its target without changing course
+    // Unused code
     void Walking()
     {
         if (isOnTarget) // If on target, return to idle state
@@ -251,13 +258,27 @@ public class AI_Basic_1 : AI_Base
         if (playerVisible && currentState != AIState.Chase) TransitionToState(AIState.Chase);
     }
 
-    // Sets destination with optimized delay
-    public override void UpdatePath(Vector3 pos)
+    /*
+     * This function was implemented to see how difficult it would be to add to this script
+     * Currently the function itself was straightforward, now I got to see how I need to call it from other states
+     */
+    void Stalk()
     {
-        if (Time.time >= base.pathUpdateDeadline)
+        playerTarget = aI_Memory.currentTarget;
+
+        Debug.Log(playerTarget == null);
+
+        if (playerTarget == null) return;
+
+        float distance = GetDistance(playerTarget.position);
+
+        if (distance > maxDistance)
         {
-            base.pathUpdateDeadline = Time.time + ai_References.pathUpdateDelay;
-            ai_References.navMeshAgent.SetDestination(pos);
+            UpdatePath(playerTarget.position);
+        }
+        else
+        {
+            PauseAgent(true);
         }
     }
 

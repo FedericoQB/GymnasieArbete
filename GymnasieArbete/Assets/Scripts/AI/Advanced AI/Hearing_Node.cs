@@ -23,13 +23,15 @@ public class Hearing_Node : Node
     {
         // Make hearing turn the AI towards the soudn
 
-        foreach (SoundInformation source in aI_Memory.heardSounds)
+        for(int i = 0; i < aI_Memory.heardSounds.Count; i++)
         {
-            SoundInformation soundInfo = source;
+            
 
-            float distance = Vector3.Distance(aI_Base.transform.position, source.origin);
+            SoundInformation soundInfo = aI_Memory.heardSounds[i];
 
-            float hearingDistance = source.hearingRange;
+            float distance = Vector3.Distance(aI_Base.transform.position, soundInfo.origin);
+
+            float hearingDistance = soundInfo.hearingRange;
 
             if (distance <= hearingDistance)
             {
@@ -37,14 +39,15 @@ public class Hearing_Node : Node
                 aI_Memory.HeardPlayer(soundInfo.origin);
 
                 // Store the sound's position for the NPC to investigate.
-                Debug.Log("Heard Sound: " +  source.audioName + ". At " + aI_Memory.lastHeardTargetPosition);
+                Debug.Log("Heard Sound: " +  soundInfo.audioName + ". At " + aI_Memory.lastHeardTargetPosition);
 
 
                 return NodeState.SUCCESS;
             }
 
-            // IF it does not hear
-            // aI_Memory.heardSounds.Remove(source);
+            // IF it does not hear, remove sound from memory and set the index back one
+            aI_Memory.heardSounds.RemoveAt(i);
+            i--;
         }
 
         return NodeState.FAILURE;

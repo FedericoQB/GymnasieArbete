@@ -12134,7 +12134,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1677623553
 GameObject:
@@ -12189,6 +12189,8 @@ MonoBehaviour:
   - {fileID: 1935739795}
   - {fileID: 1159223248}
   currentPatrolStation: 0
+  maxDistance: 10
+  minDistance: 8
   currentState: 1
   previousState: 0
 --- !u!114 &1677623555

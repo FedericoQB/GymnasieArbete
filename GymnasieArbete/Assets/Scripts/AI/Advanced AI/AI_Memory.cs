@@ -1,19 +1,31 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AI_Memory : MonoBehaviour
 {
     // Stores Variables that the AI picks up during runtime
 
+
+    // Investigation memory values
     public Vector3 lastSeenTargetPosition { get; set; }
     public Vector3 lastHeardTargetPosition { get; set; }
 
     public bool hasLastKnownPosition { get; private set; }
+    public bool hasLastHeardPosition { get; private set; }
 
+    public SphereCollider hearingCollider;
+
+    public List<SoundInformation> heardSounds;
+
+    // Fear
     [SerializeField, Range(0f, 100f)]
     private float fearGauge = 0f;
 
     public float fear { get; private set; }
 
+    // Player
     public Transform currentTarget { get; private set; }
 
     public bool hasTarget => currentTarget != null;
@@ -64,6 +76,14 @@ public class AI_Memory : MonoBehaviour
         lastDetectionTime = Time.time;
     }
 
+    public void HeardPlayer(Vector3 pos)
+    {
+        hasLastHeardPosition = true;
+        lastHeardTargetPosition = pos;
+    }
+
+
+
     public void LoseSight()
     {
         playerDetected = false;
@@ -80,8 +100,7 @@ public class AI_Memory : MonoBehaviour
         currentTarget = null;
         playerDetected = false;
         hasLastKnownPosition = false;
-
-
+        hasLastHeardPosition = false;
     }
 
     // Add hearing, through node or memory
@@ -89,7 +108,10 @@ public class AI_Memory : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Sound"))
         {
-            lastHeardTargetPosition = other.transform.position;
+            // Gets the reference and stores into a new var to avoid null calls when object gets destroyed
+            SoundInformation tempSoundInfo = other.GetComponent<AudioObject>().soundInfo;
+
+            heardSounds.Add(tempSoundInfo);
         }
     }
 }

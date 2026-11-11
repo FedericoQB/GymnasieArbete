@@ -10,8 +10,6 @@ public class Stalk_Node : Node
 
     Transform target;
 
-    AI_Memory aI_Memory;
-
     public Stalk_Node(AI_Base aI_Base, NPCSettings npcSettings) : base(aI_Base, npcSettings)
     {
         maxDistance = npcSettings.maxDistance;

@@ -17,6 +17,8 @@ namespace BehaviourTree
 
         protected AI_Base aI_Base;
 
+        protected AI_Memory aI_Memory;
+
         protected NodeState state;
 
         public Node parent;

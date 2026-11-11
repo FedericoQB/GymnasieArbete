@@ -18,9 +18,6 @@ public class Perception_Node : Node
 
     Transform playerTransform;
 
-    AI_Memory aI_Memory;
-
-
     public Perception_Node(AI_Base aI_Base, NPCSettings npcSettings, Transform eyesTransform) : base(aI_Base, npcSettings)
     {
         this.eyesTransform = eyesTransform;

@@ -15,8 +15,6 @@ public class Patrol_Node : Node
     private float waitCounter = 0f;
     private bool waiting = false;
 
-    AI_Memory aI_Memory;
-
     public Patrol_Node(AI_Base aI_Base, NPCSettings npcSettings, Transform[] patrolPositions) : base(aI_Base, npcSettings)
     {
         _patrolPositions = patrolPositions;

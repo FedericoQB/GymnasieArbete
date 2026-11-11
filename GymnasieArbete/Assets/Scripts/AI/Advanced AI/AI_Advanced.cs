@@ -43,10 +43,19 @@ public class AI_Advanced : BTree
             // Senses Sequence
             new Sequence(new List<Node>
             {
-                new Perception_Node(this, npcSettings, eyesTransform),
-                /* For the hearing node, it can instead of instantly initiating chase or stalk, it can add a lastknownposition
-                 * Which will lead to the investigation node to be used.
-                */
+
+                // When one of the perception nodes succeeds, it continues
+                new Selector(new List<Node>
+                {
+                    new Perception_Node(this, npcSettings, eyesTransform),
+                    /* For the hearing node, it can instead of instantly initiating chase or stalk, it can add a lastknownposition
+                     * Which will lead to the investigation node to be used.
+                    */
+
+                    new Hearing_Node(this, npcSettings),
+                }),
+
+                
 
                 // Decides between chasing or stalking depending on the player's vision
                 new Selector(new List<Node>
@@ -74,7 +83,7 @@ public class AI_Advanced : BTree
         });
 
         // Testing Root - Replace Node to the testing Node and change return value to root2
-        Node root3 = new Perception_Node(this, npcSettings, eyesTransform);
+        Node root3 = new Hearing_Node(this, npcSettings);
 
         // Can use multiple roots and change active through the return value
         return root2;

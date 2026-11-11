@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Chase_Node : Node
 {
-    AI_Memory aI_Memory;
-
     public Chase_Node(AI_Base aI_Base, NPCSettings npcSettings) : base(aI_Base, npcSettings)
     {
         aI_Memory = aI_Base.GetMemory();

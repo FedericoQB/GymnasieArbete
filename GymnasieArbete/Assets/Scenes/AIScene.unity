@@ -6065,6 +6065,7 @@ MonoBehaviour:
       volume: 0.6
       pitchRange: {x: 0.9, y: 1.1}
       randomizePitch: 1
+      radius: 1
   - groupName: Player
     soundInfo:
     - audioName: Normal Footstep
@@ -6072,11 +6073,13 @@ MonoBehaviour:
       volume: 0.2
       pitchRange: {x: 0.95, y: 1.05}
       randomizePitch: 1
+      radius: 1
     - audioName: Crouching Footstep
       soundClip: {fileID: 8300000, guid: 0ee3befb8d4b16441ad0abc1e5418847, type: 3}
       volume: 0.05
       pitchRange: {x: 0.95, y: 1.05}
       randomizePitch: 1
+      radius: 0.5
   - groupName: Monster
     soundInfo: []
   masterVolumeMultiplier: 1
@@ -12103,6 +12106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9199e7741aa44aa48882d4db91119da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Memory
+  hearingCollider: {fileID: 1595596918}
+  heardSounds: []
   fearGauge: 0
   playerSeesAI: 0
   currentState: 0
@@ -14932,6 +14937,59 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &2018595447
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2018595449}
+  - component: {fileID: 2018595448}
+  m_Layer: 0
+  m_Name: TestCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!135 &2018595448
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018595447}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &2018595449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2018595447}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.79456, y: 8, z: -9.14109}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2044214336
 GameObject:
   m_ObjectHideFlags: 0
@@ -16161,3 +16219,4 @@ SceneRoots:
   - {fileID: 1341636683}
   - {fileID: 929955869}
   - {fileID: 907100323}
+  - {fileID: 2018595449}

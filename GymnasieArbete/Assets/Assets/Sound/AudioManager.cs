@@ -17,6 +17,10 @@ public class SoundInformation
     public float volume = 1f;
     public Vector2 pitchRange = new Vector2(0.9f, 1.1f);
     public bool randomizePitch = true;
+
+    public float hearingRange = 1f;
+
+    [HideInInspector] public Vector3 origin;
 }
 
 [System.Serializable]

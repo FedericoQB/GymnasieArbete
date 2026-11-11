@@ -6,8 +6,6 @@ using UnityEngine.AI;
 
 public class Investigate_Node : Node
 {
-    AI_Memory aI_Memory;
-
     // Searching Variables
     float searchDuration;
     float searchTimer;
@@ -25,6 +23,8 @@ public class Investigate_Node : Node
     float waitTimer;
     float waitDuration = 3f;
 
+    Vector3 lastKnownPosition;
+
     public Investigate_Node(AI_Base aI_Base, NPCSettings npcSettings) : base(aI_Base, npcSettings)
     {
         aI_Memory = aI_Base.GetMemory();
@@ -33,17 +33,21 @@ public class Investigate_Node : Node
 
     public override NodeState Evaluate()
     {
-        // If it doesnt have the last known position, skip over node
-        if (!aI_Memory.hasLastKnownPosition)
+        // If it doesnt have the last known position nor the heard position, skip over node
+        if (!aI_Memory.hasLastKnownPosition && !aI_Memory.hasLastHeardPosition)
         {
             searching = false;
             hasSearchDestination = false;
             return NodeState.FAILURE;
         }
-            
-        Vector3 lastKnownPosition = aI_Memory.lastSeenTargetPosition;
-
-        Debug.Log("Investigating");
+        else if (aI_Memory.hasLastHeardPosition) // If it heard something, set that as the position
+        {
+            lastKnownPosition = aI_Memory.lastHeardTargetPosition;
+        }
+        else // If it doesnt have the lastheardPosition, but has seen the player, continue with node
+        {
+            lastKnownPosition = aI_Memory.lastSeenTargetPosition;
+        }
 
         // Agent moves to the last known position of the player
         if (!searching)

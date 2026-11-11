@@ -15,8 +15,6 @@ public class Echolocation_Node : Node
 
     Transform playerTransform;
 
-    AI_Memory aI_Memory;
-
     public Echolocation_Node(AI_Base aI_Base, NPCSettings npcSettings) : base(aI_Base, npcSettings)
     {
         rayCount = npcSettings.rayCountEcho;

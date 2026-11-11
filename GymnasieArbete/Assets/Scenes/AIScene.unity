@@ -6065,7 +6065,8 @@ MonoBehaviour:
       volume: 0.6
       pitchRange: {x: 0.9, y: 1.1}
       randomizePitch: 1
-      radius: 1
+      hearingRange: 1
+      origin: {x: 0, y: 0, z: 0}
   - groupName: Player
     soundInfo:
     - audioName: Normal Footstep
@@ -6073,13 +6074,15 @@ MonoBehaviour:
       volume: 0.2
       pitchRange: {x: 0.95, y: 1.05}
       randomizePitch: 1
-      radius: 1
+      hearingRange: 5
+      origin: {x: 0, y: 0, z: 0}
     - audioName: Crouching Footstep
       soundClip: {fileID: 8300000, guid: 0ee3befb8d4b16441ad0abc1e5418847, type: 3}
       volume: 0.05
       pitchRange: {x: 0.95, y: 1.05}
       randomizePitch: 1
-      radius: 0.5
+      hearingRange: 1
+      origin: {x: 0, y: 0, z: 0}
   - groupName: Monster
     soundInfo: []
   masterVolumeMultiplier: 1

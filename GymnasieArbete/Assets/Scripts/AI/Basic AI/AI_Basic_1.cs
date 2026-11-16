@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class AI_Basic_1 : AI_Base
 {
@@ -24,6 +25,9 @@ public class AI_Basic_1 : AI_Base
     public float damage = 1f;
     public float attackDelay = 2f;
     Coroutine attackCoroutine;
+
+    public float maximumTimeEnemyVisibleToPlayer = 10f;
+    float timeEnemyVisibleToPlayer; 
 
     // Perception
     [Header("Perception Values")]
@@ -50,7 +54,8 @@ public class AI_Basic_1 : AI_Base
         Patrol,
         Walking,
         Chase,
-        Looking
+        Looking,
+        Stalk
     } // Add stalk and remove walking
 
     [SerializeField] private AIState currentState = AIState.Patrol;
@@ -91,7 +96,9 @@ public class AI_Basic_1 : AI_Base
             case AIState.Looking:
                 Looking();
                 break;
-                // Add stalk
+            case AIState.Stalk:
+                Stalk();
+                break;
         }
     }
 
@@ -254,8 +261,27 @@ public class AI_Basic_1 : AI_Base
 
         // Sets global value to local value
         playerVisible = raySeesPlayer;
-        // If player is visible and is not currently chasing, start Chase.
-        if (playerVisible && currentState != AIState.Chase) TransitionToState(AIState.Chase);
+        // If player is visible and is not currently chasing, start Stalking. If player sees enemy long enough, start chasing
+        /*
+         * Challenge: Adding a new state that will run when the enemy sees the player but the player does not see the enemy
+         * Issues: Have to make sure that the rest of the states are not running or are running to get the wanted result
+         * 
+         * In BT only need a condition node and a sequence node to make the same structure, no need to change other states
+         * 
+         */
+        // ISSUE: I have to make sure that each state is not running to make sure the transition runs correctly before it starts looping
+        if (playerVisible && currentState != AIState.Chase && currentState != AIState.Stalk)
+        {
+            // Had to make sure each state is not running to be used
+            if (currentState == AIState.Looking)
+            {
+                TransitionToState(AIState.Chase);
+            }
+            else
+            {
+                TransitionToState(AIState.Stalk);
+            }    
+        }
     }
 
     /*
@@ -264,8 +290,6 @@ public class AI_Basic_1 : AI_Base
      */
     void Stalk()
     {
-        playerTarget = aI_Memory.currentTarget;
-
         Debug.Log(playerTarget == null);
 
         if (playerTarget == null) return;
@@ -279,6 +303,37 @@ public class AI_Basic_1 : AI_Base
         else
         {
             PauseAgent(true);
+        }
+
+        // Added code to work with FSM
+        // This line is necessary to be able to transition to another state
+        if (IsEnemyVisibleToPlayerTimeLimit()) TransitionToState(AIState.Chase);
+
+    }
+
+    // Checks if player is staring long enough
+    bool IsEnemyVisibleToPlayerTimeLimit()
+    {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+
+        bool visible = screenPoint.x >= 0 && screenPoint.x <= 1 &&
+               screenPoint.y >= 0 && screenPoint.y <= 1 &&
+               screenPoint.z > 0;
+
+        if (!visible)
+        {
+            timeEnemyVisibleToPlayer = 0;
+            return false;
+        }
+
+        if (timeEnemyVisibleToPlayer < maximumTimeEnemyVisibleToPlayer)
+        {
+            timeEnemyVisibleToPlayer += Time.deltaTime;
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 

@@ -53,7 +53,8 @@ public class AI_Advanced : BTree
                     // First sequence runs if the player can see the Agent - Chase
                     new Sequence(new List<Node>
                     {
-                        new Condition_Node(() => aI_Memory.playerSeesAI),
+                        // Same function as FSM // Current problem is that it does not find the target if it hears first.
+                        new Condition_Node(() => aI_Memory.IsEnemyVisibleToPlayerTimeLimit()),
                         new Chase_Node(this, npcSettings)
                     }),
 
@@ -99,6 +100,6 @@ public class AI_Advanced : BTree
         Node root4 = new Hearing_Node(this, npcSettings);
 
         // Can use multiple roots and change active through the return value
-        return root3;
+        return root2;
     }
 }

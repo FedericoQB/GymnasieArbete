@@ -34,7 +34,10 @@ public class AI_Memory : MonoBehaviour
 
     public float lastDetectionTime { get; private set; }
 
-    public bool playerSeesAI;
+    //public bool playerSeesAI;
+
+    public float maximumTimeEnemyVisibleToPlayer = 10f;
+    float timeEnemyVisibleToPlayer;
 
     public enum AwarenessState
     {
@@ -112,6 +115,34 @@ public class AI_Memory : MonoBehaviour
             SoundInformation tempSoundInfo = other.GetComponent<AudioObject>().soundInfo;
 
             heardSounds.Add(tempSoundInfo);
+        }
+    }
+
+    // Does player see Enemy
+    public bool IsEnemyVisibleToPlayerTimeLimit()
+    {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+
+        bool visible = screenPoint.x >= 0 && screenPoint.x <= 1 &&
+               screenPoint.y >= 0 && screenPoint.y <= 1 &&
+               screenPoint.z > 0;
+
+        if (!visible)
+        {
+            timeEnemyVisibleToPlayer = 0;
+            return false;
+        }
+
+        if (timeEnemyVisibleToPlayer < maximumTimeEnemyVisibleToPlayer)
+        {
+            timeEnemyVisibleToPlayer += Time.deltaTime;
+            Debug.Log("Enemy is NOT visible to player");
+            return false;
+        }
+        else
+        {
+            Debug.Log("Enemy is visible to player");
+            return true;
         }
     }
 }

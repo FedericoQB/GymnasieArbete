@@ -69,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
         crouching
     }
 
+    // Static values
+    public static bool enemyVisible;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -251,5 +254,10 @@ public class PlayerMovement : MonoBehaviour
     void GroundCheck()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundLayer);
+    }
+
+    void IsEnemyVisible()
+    {
+
     }
 }

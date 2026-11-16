@@ -5,6 +5,8 @@ using UnityEngine.AI;
 [RequireComponent (typeof(AI_References))]
 public class AI_Base : MonoBehaviour
 {
+    // Edit this comment to recompile script
+
     protected AI_References ai_References;
 
     protected float pathUpdateDeadline;

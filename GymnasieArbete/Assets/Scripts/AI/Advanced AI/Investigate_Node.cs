@@ -34,13 +34,13 @@ public class Investigate_Node : Node
     public override NodeState Evaluate()
     {
         // If it doesnt have the last known position nor the heard position, skip over node
-        if (!aI_Memory.hasLastKnownPosition && !aI_Memory.hasLastHeardPosition)
+        if (!aI_Memory.hasLastSeenPosition && !aI_Memory.hasLastHeardPosition)
         {
             searching = false;
             hasSearchDestination = false;
             return NodeState.FAILURE;
         }
-        else if (aI_Memory.hasLastHeardPosition && !aI_Memory.hasLastKnownPosition) // If it heard something, set that as the position
+        else if (aI_Memory.hasLastHeardPosition && !aI_Memory.hasLastSeenPosition) // If it heard something, set that as the position
         {
             lastKnownPosition = aI_Memory.lastHeardTargetPosition;
         }

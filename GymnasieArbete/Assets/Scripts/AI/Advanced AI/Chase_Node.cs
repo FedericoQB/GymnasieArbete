@@ -16,7 +16,11 @@ public class Chase_Node : Node
 
     public override NodeState Evaluate()
     {
+        // Current possible problem, the perception is not catching the player when it is up close and
+        // resets the currentTarget will possible make it attack instead
         Transform target = aI_Memory.currentTarget;
+
+        Debug.Log($"Target is: {target}");
 
         if (aI_Base.GetRemainingDistance(target.position) > 1f)
         {

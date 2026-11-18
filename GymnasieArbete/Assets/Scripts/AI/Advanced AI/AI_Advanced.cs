@@ -50,6 +50,9 @@ public class AI_Advanced : BTree
                 // Decides between chasing or stalking depending on the player's vision
                 new Selector(new List<Node>
                 {
+                    // If it only heard but not seen, this node will return success which will lead to investigation
+                    new Condition_Node(() => !aI_Memory.hasLastSeenPosition),
+
                     // First sequence runs if the player can see the Agent - Chase
                     new Sequence(new List<Node>
                     {

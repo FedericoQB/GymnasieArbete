@@ -12,7 +12,7 @@ public class AI_Memory : MonoBehaviour
     public Vector3 lastSeenTargetPosition { get; set; }
     public Vector3 lastHeardTargetPosition { get; set; }
 
-    public bool hasLastKnownPosition { get; private set; }
+    public bool hasLastSeenPosition { get; private set; }
     public bool hasLastHeardPosition { get; private set; }
 
     public SphereCollider hearingCollider;
@@ -65,7 +65,7 @@ public class AI_Memory : MonoBehaviour
         currentTarget = target;
         lastSeenTargetPosition = target.position;
 
-        hasLastKnownPosition = true;
+        hasLastSeenPosition = true;
         playerDetected = true;
         lastDetectionTime = Time.time;
     }
@@ -102,7 +102,7 @@ public class AI_Memory : MonoBehaviour
     {
         currentTarget = null;
         playerDetected = false;
-        hasLastKnownPosition = false;
+        hasLastSeenPosition = false;
         hasLastHeardPosition = false;
     }
 

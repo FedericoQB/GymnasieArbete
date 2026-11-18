@@ -12112,7 +12112,7 @@ MonoBehaviour:
   hearingCollider: {fileID: 1595596918}
   heardSounds: []
   fearGauge: 0
-  playerSeesAI: 0
+  maximumTimeEnemyVisibleToPlayer: 10
   currentState: 0
   previousState: 0
 --- !u!135 &1595596918
@@ -12158,7 +12158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1677623554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12177,6 +12177,7 @@ MonoBehaviour:
   rangeOfAttack: 1
   damage: 1
   attackDelay: 2
+  maximumTimeEnemyVisibleToPlayer: 10
   maxAngle: 30
   rayCount: 20
   rayLength: 10

@@ -39,7 +39,7 @@ public class Hearing_Node : Node
                 aI_Memory.HeardPlayer(soundInfo.origin);
 
                 // Store the sound's position for the NPC to investigate.
-                Debug.Log("Heard Sound: " +  soundInfo.audioName + ". At " + aI_Memory.lastHeardTargetPosition);
+                //Debug.Log("Heard Sound: " +  soundInfo.audioName + ". At " + aI_Memory.lastHeardTargetPosition);
 
 
                 return NodeState.SUCCESS;

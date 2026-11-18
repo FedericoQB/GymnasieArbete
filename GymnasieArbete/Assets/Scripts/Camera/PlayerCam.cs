@@ -14,6 +14,8 @@ public class PlayerCam : MonoBehaviour
 
     public Transform orientation;
 
+    private bool isPaused;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -23,6 +25,12 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            isPaused = !isPaused;
+        }
+
+        if (isPaused) return;
         LookAround();
 
         if (Input.GetKeyDown(interactKey))
@@ -38,6 +46,8 @@ public class PlayerCam : MonoBehaviour
 
     void LookAround()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+
         float mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivityX * Time.deltaTime;
         float mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivityY * Time.deltaTime;
 

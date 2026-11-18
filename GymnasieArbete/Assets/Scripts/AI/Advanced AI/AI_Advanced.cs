@@ -57,14 +57,18 @@ public class AI_Advanced : BTree
                     new Sequence(new List<Node>
                     {
                         // Same function as FSM // Current problem is that it does not find the target if it hears first.
-                        new Condition_Node(() => aI_Memory.IsEnemyVisibleToPlayerTimeLimit()),
-                        new Chase_Node(this, npcSettings)
+                        // The condition is if the player stares long enough or the feargauge is at 100
+                        new Condition_Node(() => aI_Memory.IsEnemyVisibleToPlayerTimeLimit() || aI_Memory.GetFear() == 100),
+
+                        new Chase_Node(this, npcSettings) // Sets fear at 100
                     }),
 
                     // Second sequence runs if the player can NOT see the Agent - Stalk
                     new Sequence(new List<Node>
                     {
                         new Condition_Node(() => aI_Memory.playerDetected),
+                        new Condition_Node(() => aI_Memory.GetFear() <= 40), // If feargauge is under 40/100
+
                         new Stalk_Node(this, npcSettings)
                     }),
                 }),

@@ -22,6 +22,9 @@ public class Chase_Node : Node
 
         Debug.Log($"Target is: {target}");
 
+        // Sets fear to maximum
+        aI_Memory.SetFear(100f);
+
         if (aI_Base.GetRemainingDistance(target.position) > 1f)
         {
             aI_Base.UpdatePath(target.position);

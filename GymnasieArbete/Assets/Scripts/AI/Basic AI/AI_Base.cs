@@ -5,7 +5,8 @@ using UnityEngine.AI;
 [RequireComponent (typeof(AI_References))]
 public class AI_Base : MonoBehaviour
 {
-    // Edit this comment to recompile script
+    // Increase the count to recompile script
+    // Total compiles: 1
 
     protected AI_References ai_References;
 

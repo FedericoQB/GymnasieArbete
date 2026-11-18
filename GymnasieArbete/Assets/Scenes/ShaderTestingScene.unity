@@ -163,10 +163,10 @@ Light:
   serializedVersion: 13
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.72
+  m_Intensity: 20
   m_Range: 10
-  m_SpotAngle: 64.25308
-  m_InnerSpotAngle: 17.382328
+  m_SpotAngle: 63.151848
+  m_InnerSpotAngle: 16.281103
   m_CookieSize2D: {x: 10, y: 10}
   m_Shadows:
     m_Type: 0
@@ -6257,7 +6257,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 34fc287f7010aca4b810c95292e360bf, type: 2}
     - target: {fileID: 8812356063854973306, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
       propertyPath: field of view
-      value: 65
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8812356063854973306, guid: f6739a9d048e9f94a8852ca0a488fc2c, type: 3}
       propertyPath: m_CullingMask.m_Bits

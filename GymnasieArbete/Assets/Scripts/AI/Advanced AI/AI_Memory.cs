@@ -23,8 +23,6 @@ public class AI_Memory : MonoBehaviour
     [SerializeField, Range(0f, 100f)]
     private float fearGauge = 0f;
 
-    public float fear { get; private set; }
-
     // Player
     public Transform currentTarget { get; private set; }
 
@@ -54,7 +52,7 @@ public class AI_Memory : MonoBehaviour
         // Only sets when transitioning
         previousState = currentState;
         currentState = newState;
-        Debug.Log($"AI state transitioned to state: {newState}");
+        Debug.Log($"AI ADVANCED state transitioned to state: {newState}");
     }
 
     public void SetTarget(Transform target)
@@ -98,6 +96,11 @@ public class AI_Memory : MonoBehaviour
         fearGauge = Mathf.Clamp(value, 0f, 100f);
     }
 
+    public float GetFear()
+    {
+        return fearGauge;
+    }
+
     public void ForgetTarget()
     {
         currentTarget = null;
@@ -136,12 +139,12 @@ public class AI_Memory : MonoBehaviour
         if (timeEnemyVisibleToPlayer < maximumTimeEnemyVisibleToPlayer)
         {
             timeEnemyVisibleToPlayer += Time.deltaTime;
-            Debug.Log("Enemy is NOT visible to player");
+            //Debug.Log("Enemy is NOT visible to player");
             return false;
         }
         else
         {
-            Debug.Log("Enemy is visible to player");
+            //Debug.Log("Enemy is visible to player");
             return true;
         }
     }

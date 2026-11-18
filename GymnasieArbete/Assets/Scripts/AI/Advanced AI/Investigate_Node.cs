@@ -49,6 +49,8 @@ public class Investigate_Node : Node
             lastKnownPosition = aI_Memory.lastSeenTargetPosition;
         }
 
+        aI_Memory.SetFear(50f);
+
         // Agent moves to the last known position of the player
         if (!searching)
         {

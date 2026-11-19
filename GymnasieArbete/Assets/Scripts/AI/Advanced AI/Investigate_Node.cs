@@ -49,6 +49,9 @@ public class Investigate_Node : Node
             lastKnownPosition = aI_Memory.lastSeenTargetPosition;
         }
 
+
+
+        // Sets fear gauge to the middle
         aI_Memory.SetFear(50f);
 
         // Agent moves to the last known position of the player
@@ -58,6 +61,7 @@ public class Investigate_Node : Node
 
             if (aI_Base.GetRemainingDistance(lastKnownPosition) > aI_Base.GetStoppingDistance())
             {
+                // THIS LINE IS THE REASON WHY HEARING IS NOT UPDATING
                 return NodeState.RUNNING;
             }
 

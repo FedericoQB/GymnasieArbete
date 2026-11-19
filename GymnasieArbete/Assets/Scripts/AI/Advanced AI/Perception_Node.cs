@@ -16,8 +16,6 @@ public class Perception_Node : Node
     private int rayCount = 9;
     private float rayLength = 10f;
 
-    Transform playerTransform;
-
     public Perception_Node(AI_Base aI_Base, NPCSettings npcSettings, Transform eyesTransform) : base(aI_Base, npcSettings)
     {
         this.eyesTransform = eyesTransform;

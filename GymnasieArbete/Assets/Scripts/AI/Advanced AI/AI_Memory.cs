@@ -26,6 +26,7 @@ public class AI_Memory : MonoBehaviour
     // Player
     public Transform currentTarget { get; private set; }
 
+    // Unused variable
     public bool hasTarget => currentTarget != null;
 
     public bool playerDetected { get; private set; }
@@ -55,6 +56,11 @@ public class AI_Memory : MonoBehaviour
         Debug.Log($"AI ADVANCED state transitioned to state: {newState}");
     }
 
+    private void Update()
+    {
+        Debug.Log("Last Heard position: " + lastHeardTargetPosition);
+    }
+
     public void SetTarget(Transform target)
     {
         if (target == null)
@@ -82,8 +88,6 @@ public class AI_Memory : MonoBehaviour
         hasLastHeardPosition = true;
         lastHeardTargetPosition = pos;
     }
-
-
 
     public void LoseSight()
     {
@@ -117,6 +121,7 @@ public class AI_Memory : MonoBehaviour
             // Gets the reference and stores into a new var to avoid null calls when object gets destroyed
             SoundInformation tempSoundInfo = other.GetComponent<AudioObject>().soundInfo;
 
+            if (heardSounds.Contains(tempSoundInfo)) return; // If list contains, do not add
             heardSounds.Add(tempSoundInfo);
         }
     }

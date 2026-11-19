@@ -294,7 +294,7 @@ public class AI_Basic_1 : AI_Base
 
         if (playerTarget == null) return;
 
-        float distance = GetDistance(playerTarget.position);
+        float distance = GetPossiblePathRemainingDistance(playerTarget.position);
 
         if (distance > maxDistance)
         {

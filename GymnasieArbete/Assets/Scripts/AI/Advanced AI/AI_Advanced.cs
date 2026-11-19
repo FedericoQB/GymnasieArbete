@@ -83,30 +83,13 @@ public class AI_Advanced : BTree
         // Final tree
         Node root3 = new Selector(new List<Node>
         {
-            // Senses Sequence
-            new Sequence(new List<Node>
-            {
-
-                // When one of the perception nodes succeeds, it continues
-                new Selector(new List<Node>
-                {
-                    new Perception_Node(this, npcSettings, eyesTransform),
-                    // Continue with other senses
-                }),
-
-                new Chase_Node(this, npcSettings)
-            }),
-
-            new Investigate_Node(this, npcSettings),
-
-            // The fallback
-            new Patrol_Node(this, npcSettings, waypoints),
+            
         });
 
         // Testing Nodes - Replace Node to the testing Node and change return value to root2
         Node root4 = new Hearing_Node(this, npcSettings);
 
         // Can use multiple roots and change active through the return value
-        return root3;
+        return root2;
     }
 }

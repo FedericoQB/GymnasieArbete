@@ -25,7 +25,6 @@ public class Hearing_Node : Node
 
         for(int i = 0; i < aI_Memory.heardSounds.Count; i++)
         {
-            
 
             SoundInformation soundInfo = aI_Memory.heardSounds[i];
 
@@ -41,14 +40,16 @@ public class Hearing_Node : Node
                 // Store the sound's position for the NPC to investigate.
                 //Debug.Log("Heard Sound: " +  soundInfo.audioName + ". At " + aI_Memory.lastHeardTargetPosition);
 
-
+                aI_Memory.heardSounds.RemoveAt(i--);
                 return NodeState.SUCCESS;
             }
 
             // IF it does not hear, remove sound from memory and set the index back one
-            aI_Memory.heardSounds.RemoveAt(i);
-            i--;
+            aI_Memory.heardSounds.RemoveAt(i--);
         }
+
+
+
 
         return NodeState.FAILURE;
     }

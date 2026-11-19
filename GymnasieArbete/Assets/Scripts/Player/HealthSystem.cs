@@ -20,10 +20,16 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        Debug.Log($"Health changed, Current: {health}, from {health - damage}");
+    }
+
     public void ChangeHealth(float amount)
     {
-        health += amount;
-        Debug.Log($"Health changed, Current: {health}, from {health - amount}");
+        Debug.Log($"Health changed, Current: {amount}, from {health}");
+        health = amount;
     }
 
     public float GetHealth() { return health; }

@@ -221,7 +221,7 @@ public class AI_Basic_1 : AI_Base
 
     IEnumerator Attack() // Implement Code for death of Player
     {
-        playerTarget.GetComponent<HealthSystem>().ChangeHealth(-damage);
+        playerTarget.GetComponent<HealthSystem>().TakeDamage(-damage);
         yield return new WaitForSeconds(attackDelay);
         attackCoroutine = null;
     }

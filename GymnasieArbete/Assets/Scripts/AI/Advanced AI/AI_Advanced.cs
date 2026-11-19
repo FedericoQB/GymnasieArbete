@@ -107,6 +107,6 @@ public class AI_Advanced : BTree
         Node root4 = new Hearing_Node(this, npcSettings);
 
         // Can use multiple roots and change active through the return value
-        return root2;
+        return root3;
     }
 }

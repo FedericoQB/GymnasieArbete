@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent (typeof(AI_References))]
 public class AI_Base : MonoBehaviour
@@ -50,7 +51,32 @@ public class AI_Base : MonoBehaviour
 
     public float GetRemainingDistance(Vector3 destination)
     {
-        return !ai_References.navMeshAgent.pathPending ? ai_References.navMeshAgent.remainingDistance : Vector3.Distance(transform.position, destination);
+        //Explanation: If !pathpending { return remainingDistance } else { Calculate straight line to target }
+        return !ai_References.navMeshAgent.pathPending ? ai_References.navMeshAgent.remainingDistance : GetDistance(destination);
+    }
+
+    public float GetPossiblePathRemainingDistance(Vector3 destination)
+    {
+        NavMeshPath path = new NavMeshPath();
+
+        bool foundPath = NavMesh.CalculatePath(
+        transform.position,
+        destination,
+        NavMesh.AllAreas,
+        path
+        );
+
+        float distance = 0f;
+
+        for (int i = 1; i < path.corners.Length; i++)
+        {
+            distance += Vector3.Distance(
+                path.corners[i - 1],
+                path.corners[i]
+            );
+        }
+
+        return distance;
     }
 
     public float GetStoppingDistance()

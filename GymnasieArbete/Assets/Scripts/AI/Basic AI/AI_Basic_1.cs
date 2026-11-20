@@ -42,7 +42,6 @@ public class AI_Basic_1 : AI_Base
 
     [Header("Stalk Values")]
     [SerializeField] float maxDistance = 10f;
-    [SerializeField] float minDistance = 8f;
 
 
     bool isOnTarget;

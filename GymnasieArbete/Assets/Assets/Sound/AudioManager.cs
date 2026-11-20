@@ -21,6 +21,8 @@ public class SoundInformation
     public float hearingRange = 1f;
 
     [HideInInspector] public Vector3 origin;
+
+    [HideInInspector] public int soundID;
 }
 
 [System.Serializable]
@@ -39,6 +41,8 @@ public class AudioManager : MonoBehaviour
     private List<GameObject> audioPrefabs = new List<GameObject>();
     public float masterVolumeMultiplier;
     public GameObject audioObjectPrefab;
+
+    static int soundIDCounter = 0;
 
     private void Reset()
     {
@@ -61,6 +65,12 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         
+    }
+
+    public static int GenerateID()
+    {
+        // This will return a unique ID and then add 1 to the variable, so the next time it will be different ID
+        return soundIDCounter++;
     }
 
     public static void PlaySound(SoundType sound, int audioIndex, Vector3 spawnPosition)

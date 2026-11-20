@@ -35,6 +35,7 @@ public class Perception_Node : Node
 
     NodeState Perception()
     {
+
         Vector3 origin = eyesTransform.transform.position;
 
         layerMask = LayerMask.GetMask("Wall", "Player");

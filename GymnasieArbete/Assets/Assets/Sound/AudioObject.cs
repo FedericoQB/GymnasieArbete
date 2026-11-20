@@ -16,6 +16,7 @@ public class AudioObject : MonoBehaviour
     public void Play(SoundInformation sound)
     {
         soundInfo = sound;
+        soundInfo.soundID = AudioManager.GenerateID();
 
         if (sound.randomizePitch)
         {

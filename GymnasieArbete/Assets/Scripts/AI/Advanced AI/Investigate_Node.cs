@@ -33,6 +33,14 @@ public class Investigate_Node : Node
 
     public override NodeState Evaluate()
     {
+        // If player is detected, no need for investigation
+        if (aI_Memory.playerDetected)
+        {
+            searching = false;
+            hasSearchDestination = false;
+            return NodeState.FAILURE;
+        }
+
         // If it doesnt have the last known position nor the heard position, skip over node
         if (!aI_Memory.hasLastSeenPosition && !aI_Memory.hasLastHeardPosition)
         {
@@ -49,11 +57,6 @@ public class Investigate_Node : Node
             lastKnownPosition = aI_Memory.lastSeenTargetPosition;
         }
 
-
-
-        // Sets fear gauge to the middle
-        aI_Memory.SetFear(50f);
-
         // Agent moves to the last known position of the player
         if (!searching)
         {
@@ -61,7 +64,6 @@ public class Investigate_Node : Node
 
             if (aI_Base.GetRemainingDistance(lastKnownPosition) > aI_Base.GetStoppingDistance())
             {
-                // THIS LINE IS THE REASON WHY HEARING IS NOT UPDATING
                 return NodeState.RUNNING;
             }
 
@@ -88,6 +90,9 @@ public class Investigate_Node : Node
                     waiting = false;
                 }
                 SearchArea();
+
+                // Sets fear gauge to the middle
+                aI_Memory.AddFear(20f);
             }
 
             if (hasSearchDestination)

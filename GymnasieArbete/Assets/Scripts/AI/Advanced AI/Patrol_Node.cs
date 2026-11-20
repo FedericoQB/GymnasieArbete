@@ -28,6 +28,8 @@ public class Patrol_Node : Node
         if (aI_Memory.currentState != AI_Memory.AwarenessState.Unaware) aI_Memory.TransitionToState(AI_Memory.AwarenessState.Unaware);
         aI_Base.SetUpdateRotation(true);
 
+        aI_Memory.SetFear(0);
+
         if (waiting)
         {
             waitCounter += Time.deltaTime;

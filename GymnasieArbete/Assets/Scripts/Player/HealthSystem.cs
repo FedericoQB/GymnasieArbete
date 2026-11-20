@@ -23,7 +23,7 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
-        Debug.Log($"Health changed, Current: {health}, from {health - damage}");
+        Debug.Log($"Health changed, Current: {health}, from {health + damage}");
     }
 
     public void ChangeHealth(float amount)

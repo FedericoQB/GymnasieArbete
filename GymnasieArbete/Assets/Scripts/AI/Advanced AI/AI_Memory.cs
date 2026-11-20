@@ -72,6 +72,8 @@ public class AI_Memory : MonoBehaviour
         hasLastSeenPosition = true;
         playerDetected = true;
         lastDetectionTime = Time.time;
+
+        AddFear(10f);
     }
 
     public void UpdateLastKnownPosition()
@@ -92,12 +94,17 @@ public class AI_Memory : MonoBehaviour
     public void LoseSight()
     {
         playerDetected = false;
-        currentTarget = null;
+        //currentTarget = null;
     }
 
     public void SetFear(float value)
     {
         fearGauge = Mathf.Clamp(value, 0f, 100f);
+    }
+
+    public void AddFear(float value)
+    {
+        fearGauge += value;
     }
 
     public float GetFear()
@@ -121,7 +128,7 @@ public class AI_Memory : MonoBehaviour
             // Gets the reference and stores into a new var to avoid null calls when object gets destroyed
             SoundInformation tempSoundInfo = other.GetComponent<AudioObject>().soundInfo;
 
-            if (heardSounds.Contains(tempSoundInfo)) return; // If list contains, do not add
+            if (heardSounds.Exists(sound => sound.soundID == tempSoundInfo.soundID)) return; // If list contains, do not add
             heardSounds.Add(tempSoundInfo);
         }
     }
@@ -150,6 +157,9 @@ public class AI_Memory : MonoBehaviour
         else
         {
             //Debug.Log("Enemy is visible to player");
+
+            AddFear(20);
+
             return true;
         }
     }

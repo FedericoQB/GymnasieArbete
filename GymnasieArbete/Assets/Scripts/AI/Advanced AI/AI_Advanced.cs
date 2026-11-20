@@ -58,7 +58,7 @@ public class AI_Advanced : BTree
                     {
                         // Same function as FSM // Current problem is that it does not find the target if it hears first.
                         // The condition is if the player stares long enough or the feargauge is at 100
-                        new Condition_Node(() => aI_Memory.IsEnemyVisibleToPlayerTimeLimit() || aI_Memory.GetFear() == 100),
+                        new Condition_Node(() => aI_Memory.IsEnemyVisibleToPlayerTimeLimit()),
 
                         new Chase_Node(this, npcSettings) // Sets fear at 100
                     }),
@@ -83,13 +83,61 @@ public class AI_Advanced : BTree
         // Final tree
         Node root3 = new Selector(new List<Node>
         {
-            
+            // Senses Sequence
+            new Sequence(new List<Node>
+            {
+
+                // When one of the perception nodes succeeds, it continues
+                new Selector(new List<Node>
+                {
+                    new Perception_Node(this, npcSettings, eyesTransform),
+                    /* For the hearing node, it can instead of instantly initiating chase or stalk, it can add a lastknownposition
+                     * Which will lead to the investigation node to be used.
+                    */
+
+                    new Hearing_Node(this, npcSettings),
+                }),
+
+                
+
+                // Decides between chasing or stalking depending on the player's vision
+                new Selector(new List<Node>
+                {
+                    // If it only heard but not seen, this node will return success which will lead to investigation
+                    new Condition_Node(() => !aI_Memory.hasLastSeenPosition),
+
+                    // First sequence runs if the player can see the Agent - Chase
+                    new Sequence(new List<Node>
+                    {
+                        // Same function as FSM // Current problem is that it does not find the target if it hears first.
+                        // The condition is if the player stares long enough or the feargauge is at 100
+                        new Condition_Node(() => aI_Memory.IsEnemyVisibleToPlayerTimeLimit()),
+                        //new Condition_Node(() => aI_Memory.GetFear() > 80),
+
+                        new Chase_Node(this, npcSettings) // Sets fear at 100
+                    }),
+
+                    // Second sequence runs if the player can NOT see the Agent - Stalk
+                    new Sequence(new List<Node>
+                    {
+                        new Condition_Node(() => aI_Memory.playerDetected),
+                        //new Condition_Node(() => aI_Memory.GetFear() < 80), // If feargauge is under 40/100
+
+                        new Stalk_Node(this, npcSettings)
+                    }),
+                }),
+            }),
+
+            new Investigate_Node(this, npcSettings),
+
+            // The fallback
+            new Patrol_Node(this, npcSettings, waypoints),
         });
 
         // Testing Nodes - Replace Node to the testing Node and change return value to root2
         Node root4 = new Hearing_Node(this, npcSettings);
 
         // Can use multiple roots and change active through the return value
-        return root2;
+        return root3;
     }
 }

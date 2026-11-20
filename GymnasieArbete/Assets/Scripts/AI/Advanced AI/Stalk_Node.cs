@@ -6,14 +6,12 @@ using UnityEngine.AI;
 public class Stalk_Node : Node
 {
     float maxDistance = 10f;
-    float minDistance = 8f;
 
     Transform target;
 
     public Stalk_Node(AI_Base aI_Base, NPCSettings npcSettings) : base(aI_Base, npcSettings)
     {
         maxDistance = npcSettings.maxDistance;
-        minDistance = npcSettings.minDistance;
 
         aI_Memory = aI_Base.GetMemory();
     }
@@ -33,6 +31,8 @@ public class Stalk_Node : Node
         if (target == null) return NodeState.FAILURE;
 
         float distance = aI_Base.GetDistance(target.position);
+
+        Debug.Log("Distance from player: " + distance);
 
 
         if (distance > maxDistance)

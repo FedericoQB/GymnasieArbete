@@ -273,8 +273,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 1370.39990234375,
-            "y": 132.79994201660157
+            "x": 1352.7999267578125,
+            "y": 137.6000213623047
         },
         "m_Blocks": [
             {
@@ -1134,7 +1134,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.0,
+    "m_Value": 1.0,
     "m_FloatType": 0,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -1165,10 +1165,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -748.800048828125,
-            "y": 28.799997329711915,
-            "width": 208.0,
-            "height": 301.60003662109377
+            "x": -797.6000366210938,
+            "y": 30.399959564208986,
+            "width": 208.0001220703125,
+            "height": 301.5999450683594
         }
     },
     "m_Slots": [
@@ -1886,10 +1886,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -872.7998657226563,
-            "y": -104.0000228881836,
+            "x": -872.7999877929688,
+            "y": -136.00001525878907,
             "width": 107.20001220703125,
-            "height": 33.60002136230469
+            "height": 33.600013732910159
         }
     },
     "m_Slots": [

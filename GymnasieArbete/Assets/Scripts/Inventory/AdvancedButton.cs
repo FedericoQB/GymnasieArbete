@@ -4,7 +4,8 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AdvancedButton : Selectable, IPointerClickHandler
+#if UNITY_EDITOR
+public class AdvancedButton : UnityEngine.UI.Selectable, IPointerClickHandler
 {
     [Header("Click Events")]
     public UnityEvent OnLeftClick;
@@ -42,7 +43,7 @@ public class AdvancedButton : Selectable, IPointerClickHandler
 
         if (_resetRoutine != null)
         {
-            StopCoroutine(OnFinishSubmit());
+            StopCoroutine(_resetRoutine);
         }
 
         _resetRoutine = StartCoroutine(OnFinishSubmit());
@@ -61,3 +62,4 @@ public class AdvancedButton : Selectable, IPointerClickHandler
         DoStateTransition(currentSelectionState, false);
     }
 }
+#endif

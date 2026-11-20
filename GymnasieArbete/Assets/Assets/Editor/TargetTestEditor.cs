@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 [CustomEditor(typeof(TargetTest))]
 public class TargetTestEditor : Editor

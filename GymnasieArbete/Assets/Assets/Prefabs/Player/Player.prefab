@@ -119,6 +119,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5965706969482601910
 GameObject:
@@ -163,7 +164,7 @@ GameObject:
   - component: {fileID: 2006684836625138051}
   - component: {fileID: 6045213107754780828}
   - component: {fileID: 3864116737010396893}
-  - component: {fileID: 8971021104689498513}
+  - component: {fileID: 7654904017315150992}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -270,8 +271,11 @@ MonoBehaviour:
   sprintKey: 304
   jumpKey: 32
   crouchKey: 306
+  stepWalkInterval: 0.45
+  stepSprintInterval: 0.45
+  stepCrouchInterval: 0.45
   state: 0
---- !u!114 &8971021104689498513
+--- !u!114 &7654904017315150992
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,11 +284,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8337752286430213844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c2c25dff5483e42b8f1d8d796f9f05, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f17ac925ae4b174d8131bc33e2e797f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventorySystem
-  leftHand: {fileID: 0}
-  rightHand: {fileID: 0}
-  items: []
-  inventoryKey: 9
-  inventoryPrefab: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  maxHealth: 5
+  health: 0
